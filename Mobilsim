@@ -22,26 +22,11 @@ import {
   Camera,
   Search,
   PlusSquare,
-  Home
+  Home,
+  X
 } from 'lucide-react';
 
-// --- SVG ILLUSTRASJONER FOR LIFEGUIDE ---
-const SVGS = {
-  syklus: <svg viewBox="0 0 240 200" className="w-full h-full"><circle cx="120" cy="100" r="80" fill="none" stroke="#f1f5f9" strokeWidth="15"/><path d="M120 20 A80 80 0 0 1 200 100" fill="none" stroke="#fb7185" strokeWidth="15" strokeLinecap="round"/><text x="120" y="105" textAnchor="middle" fontSize="14" fontWeight="900" fill="#e11d48">28 DAGER</text></svg>,
-  bind: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M70 30 C70 10, 170 10, 170 30 L170 150 C170 170, 70 170, 70 150 Z" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/><path d="M70 70 Q40 70 40 90 Q40 110 70 110" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/><path d="M170 70 Q200 70 200 90 Q200 110 170 110" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/><rect x="90" y="50" width="60" height="80" rx="30" fill="#f0f9ff" stroke="#bae6fd" strokeWidth="1" strokeDasharray="4"/></svg>,
-  tampong: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M120 100 C120 130, 140 150, 130 170" stroke="#3b82f6" strokeWidth="4" fill="none" strokeLinecap="round"/><rect x="95" y="30" width="50" height="80" rx="8" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/><path d="M105 35 V105 M115 35 V105 M125 35 V105" stroke="#f1f5f9" strokeWidth="2"/><path d="M95 40 Q95 20 120 20 Q145 20 145 40" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/></svg>,
-  menskopp: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M70 40 C70 130, 120 160, 120 160 C120 160, 170 130, 170 40 Z" fill="#fb7185" stroke="#9f1239" strokeWidth="2"/><ellipse cx="120" cy="40" rx="50" ry="12" fill="#fff1f2" stroke="#9f1239" strokeWidth="2"/><rect x="117" y="160" width="6" height="15" rx="3" fill="#9f1239"/></svg>,
-  truse: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M40 50 H200 L180 100 C150 150, 90 150, 60 100 Z" fill="#ffffff" stroke="#334155" strokeWidth="2"/><path d="M85 90 C85 130, 155 130, 155 90 L145 105 C130 135, 110 135, 95 105 Z" fill="#334155" opacity="0.2"/></svg>,
-  bryster: <svg viewBox="0 0 240 180" className="w-full h-full"><circle cx="85" cy="90" r="40" fill="#fff1f2" stroke="#fda4af" strokeWidth="2"/><circle cx="155" cy="90" r="40" fill="#fff1f2" stroke="#fda4af" strokeWidth="2"/><circle cx="85" cy="90" r="8" fill="#fda4af" opacity="0.5"/><circle cx="155" cy="90" r="8" fill="#fda4af" opacity="0.5"/></svg>,
-  kurver: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M100 40 Q120 35 140 40 L145 90 Q170 130 145 180 L95 180 Q70 130 95 90 Z" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="2"/><text x="120" y="160" textAnchor="middle" fontSize="9" fontWeight="800" fill="#64748b" opacity="0.5">NYE KURVER</text></svg>,
-  larynx: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M80 20 Q70 90 80 160 M160 20 Q170 90 160 160" stroke="#e2e8f0" strokeWidth="6" fill="none"/><path d="M105 100 L120 85 L135 100 L130 130 Q120 145 110 130 Z" fill="#bae6fd" stroke="#0ea5e9" strokeWidth="2.5"/><path d="M210 100 L165 100" stroke="#0284c7" strokeWidth="3" strokeLinecap="round"/><path d="M175 90 L165 100 L175 110" stroke="#0284c7" strokeWidth="3" fill="none" strokeLinecap="round"/></svg>,
-  hjerne: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M120 40 C190 40, 220 90, 220 130 C220 180, 170 200, 120 200 C70 200, 20 180, 20 130 C20 90, 50 40, 120 40" fill="#f3e8ff" stroke="#a855f7" strokeWidth="2.5"/><circle cx="140" cy="115" r="22" fill="#f0abfc" opacity="0.6"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" /></circle></svg>,
-  hud_pore: <svg viewBox="0 0 240 180" className="w-full h-full"><rect x="40" y="140" width="160" height="20" fill="#fda4af" opacity="0.3"/><path d="M120 140 C120 140, 80 60, 120 40 C160 60, 120 140, 120 140" fill="#fff1f2" stroke="#fda4af" strokeWidth="2"/><circle cx="120" cy="50" r="10" fill="#fbbf24" opacity="0.8"/></svg>,
-  hår_folikkel: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M40 100 H200" stroke="#cbd5e1" strokeWidth="2"/><path d="M120 100 V40" stroke="#1e293b" strokeWidth="3" strokeLinecap="round"/><path d="M120 100 Q120 150, 140 160" fill="none" stroke="#fda4af" strokeWidth="6" opacity="0.4"/></svg>,
-  sove: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M60 120 Q100 110 140 120 Q180 130 220 120" stroke="#cbd5e1" strokeWidth="2" fill="none"/><text x="160" y="60" fontSize="20" fontWeight="bold" fill="#6366f1">Zzz</text></svg>
-};
-
-// --- HJELPEKOMPONENTER ---
+// --- HJELPE-KOMPONENTER ---
 const StatBar = ({ label, val, color }) => (
   <div className="mb-3">
     <div className="flex justify-between text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1">
@@ -63,6 +48,22 @@ const AppIcon = ({ icon, label, color, notify, onClick }) => (
     <span className="text-[9px] font-black text-slate-500 uppercase tracking-tighter">{label}</span>
   </button>
 );
+
+// --- SVG ILLUSTRASJONER ---
+const SVGS = {
+  syklus: <svg viewBox="0 0 240 200" className="w-full h-full"><circle cx="120" cy="100" r="80" fill="none" stroke="#f1f5f9" strokeWidth="15"/><path d="M120 20 A80 80 0 0 1 200 100" fill="none" stroke="#fb7185" strokeWidth="15" strokeLinecap="round"/><text x="120" y="105" textAnchor="middle" fontSize="14" fontWeight="900" fill="#e11d48">28 DAGER</text></svg>,
+  bind: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M70 30 C70 10, 170 10, 170 30 L170 150 C170 170, 70 170, 70 150 Z" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/><path d="M70 70 Q40 70 40 90 Q40 110 70 110" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/><path d="M170 70 Q200 70 200 90 Q200 110 170 110" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/><rect x="90" y="50" width="60" height="80" rx="30" fill="#f0f9ff" stroke="#bae6fd" strokeWidth="1" strokeDasharray="4"/></svg>,
+  tampong: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M120 100 C120 130, 140 150, 130 170" stroke="#3b82f6" strokeWidth="4" fill="none" strokeLinecap="round"/><rect x="95" y="30" width="50" height="80" rx="8" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/><path d="M105 35 V105 M115 35 V105 M125 35 V105" stroke="#f1f5f9" strokeWidth="2"/><path d="M95 40 Q95 20 120 20 Q145 20 145 40" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/></svg>,
+  menskopp: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M70 40 C70 130, 120 160, 120 160 C120 160, 170 130, 170 40 Z" fill="#fb7185" stroke="#9f1239" strokeWidth="2"/><ellipse cx="120" cy="40" rx="50" ry="12" fill="#fff1f2" stroke="#9f1239" strokeWidth="2"/><rect x="117" y="160" width="6" height="15" rx="3" fill="#9f1239"/></svg>,
+  truse: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M40 50 H200 L180 100 C150 150, 90 150, 60 100 Z" fill="#ffffff" stroke="#334155" strokeWidth="2"/><path d="M85 90 C85 130, 155 130, 155 90 L145 105 C130 135, 110 135, 95 105 Z" fill="#334155" opacity="0.2"/></svg>,
+  bryster: <svg viewBox="0 0 240 180" className="w-full h-full"><circle cx="85" cy="90" r="40" fill="#fff1f2" stroke="#fda4af" strokeWidth="2"/><circle cx="155" cy="90" r="40" fill="#fff1f2" stroke="#fda4af" strokeWidth="2"/><circle cx="85" cy="90" r="8" fill="#fda4af" opacity="0.5"/><circle cx="155" cy="90" r="8" fill="#fda4af" opacity="0.5"/></svg>,
+  kurver: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M100 40 Q120 35 140 40 L145 90 Q170 130 145 180 L95 180 Q70 130 95 90 Z" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="2"/><text x="120" y="160" textAnchor="middle" fontSize="9" fontWeight="800" fill="#64748b" opacity="0.5">NYE KURVER</text></svg>,
+  larynx: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M80 20 Q70 90 80 160 M160 20 Q170 90 160 160" stroke="#e2e8f0" strokeWidth="6" fill="none"/><path d="M105 100 L120 85 L135 100 L130 130 Q120 145 110 130 Z" fill="#bae6fd" stroke="#0ea5e9" strokeWidth="2.5"/><path d="M210 100 L165 100" stroke="#0284c7" strokeWidth="3" strokeLinecap="round"/><path d="M175 90 L165 100 L175 110" stroke="#0284c7" strokeWidth="3" fill="none" strokeLinecap="round"/></svg>,
+  hjerne: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M120 40 C190 40, 220 90, 220 130 C220 180, 170 200, 120 200 C70 200, 20 180, 20 130 C20 90, 50 40, 120 40" fill="#f3e8ff" stroke="#a855f7" strokeWidth="2.5"/><circle cx="140" cy="115" r="22" fill="#f0abfc" opacity="0.6"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" /></circle></svg>,
+  hud_pore: <svg viewBox="0 0 240 180" className="w-full h-full"><rect x="40" y="140" width="160" height="20" fill="#fda4af" opacity="0.3"/><path d="M120 140 C120 140, 80 60, 120 40 C160 60, 120 140, 120 140" fill="#fff1f2" stroke="#fda4af" strokeWidth="2"/><circle cx="120" cy="50" r="10" fill="#fbbf24" opacity="0.8"/></svg>,
+  hår_folikkel: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M40 100 H200" stroke="#cbd5e1" strokeWidth="2"/><path d="M120 100 V40" stroke="#1e293b" strokeWidth="3" strokeLinecap="round"/><path d="M120 100 Q120 150, 140 160" fill="none" stroke="#fda4af" strokeWidth="6" opacity="0.4"/></svg>,
+  sove: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M60 120 Q100 110 140 120 Q180 130 220 120" stroke="#cbd5e1" strokeWidth="2" fill="none"/><text x="160" y="60" fontSize="20" fontWeight="bold" fill="#6366f1">Zzz</text></svg>
+};
 
 // --- APP: INSTAGRAM ---
 const InstagramApp = ({ onBack, setStats, playerName }) => {
@@ -91,18 +92,18 @@ const InstagramApp = ({ onBack, setStats, playerName }) => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-white animate-in overflow-hidden">
+    <div className="flex flex-col h-full bg-white animate-in overflow-hidden text-slate-800">
       <div className="border-b p-4 flex items-center justify-between shrink-0">
-        <button onClick={onBack} className="p-1 text-slate-800"><ChevronLeft /></button>
-        <h1 className="font-black italic text-xl tracking-tighter text-slate-800">Instagram</h1>
+        <button onClick={onBack} className="p-1"><ChevronLeft /></button>
+        <h1 className="font-black italic text-xl tracking-tighter">Instagram</h1>
         <div className="w-6"></div>
       </div>
       <div className="flex-grow overflow-y-auto pb-20">
         {posts.map(post => (
-          <div key={post.id} className="mb-8 border-b border-slate-50 pb-6 text-slate-800">
-            <div className="p-3 flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold border">{post.user[0]}</div>
-              <span className="font-bold text-sm">{post.user}</span>
+          <div key={post.id} className="mb-8 border-b border-slate-50 pb-6">
+            <div className="p-3 flex items-center gap-2 font-bold text-sm">
+              <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] border">{post.user[0]}</div>
+              {post.user}
             </div>
             <img src={post.img} className="w-full aspect-square object-cover bg-slate-200" alt="Post" />
             <div className="p-4">
@@ -111,7 +112,7 @@ const InstagramApp = ({ onBack, setStats, playerName }) => {
                 <MessageCircle className="text-slate-800" />
                 <Send className="text-slate-800" />
               </div>
-              <p className="text-sm font-medium"><span className="font-black mr-2 text-indigo-600">{post.user}</span>{post.caption}</p>
+              <p className="text-sm font-medium"><span className="font-bold mr-2 text-indigo-600">{post.user}</span>{post.caption}</p>
               <div className="mt-3 space-y-1">
                 {(comments[post.id] || []).map((c, i) => (
                   <p key={i} className="text-[11px] font-medium leading-tight text-slate-600"><span className="font-black mr-1 text-slate-800">{playerName}</span>{c}</p>
@@ -163,8 +164,8 @@ const EmotionRadarApp = ({ onBack }) => {
           ))}
         </div>
         {selected && (
-          <div className="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-xl animate-in">
-             <h3 className="text-lg font-black text-slate-800 mb-2">{selected.label}</h3>
+          <div className="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-xl animate-in text-slate-800">
+             <h3 className="text-lg font-black mb-2">{selected.label}</h3>
              <p className="text-sm text-slate-600 mb-6 leading-relaxed font-medium">{selected.why}</p>
              <div className="bg-indigo-50 p-5 rounded-2xl border-l-4 border-indigo-500"><strong className="text-xs text-indigo-800 block mb-1 uppercase tracking-widest font-black">💡 Lite tips:</strong><p className="text-sm text-indigo-900 font-medium">{selected.tip}</p></div>
           </div>
@@ -174,7 +175,7 @@ const EmotionRadarApp = ({ onBack }) => {
   );
 };
 
-// --- APP: LIFEGUIDE ---
+// --- APP: LIFEGUIDE (FULL VERSJON) ---
 const LifeGuideApp = ({ onBack }) => {
   const [currentPage, setCurrentPage] = useState('home');
   const scrollRef = useRef(null);
@@ -182,7 +183,7 @@ const LifeGuideApp = ({ onBack }) => {
   const pages = {
     home: {
       title: "Din guide til ungdomstiden",
-      intro: "Puberteten er som en software-oppdatering for hele systemet ditt. Her får du de ærlige svarene på alt du lurer på.",
+      intro: "Puberteten er som en software-oppdatering for hele systemet ditt. Her får du de ærlige svarene uten filter.",
       menu: [
         { id: 'mensen', label: "Mensen & Utflod", icon: "🩸", color: "bg-rose-100 text-rose-600" },
         { id: 'jenter', label: "Jenter & Kroppen", icon: "🌸", color: "bg-pink-100 text-pink-600" },
@@ -195,19 +196,19 @@ const LifeGuideApp = ({ onBack }) => {
       title: "Mensen & Utflod",
       intro: "Mensen er beviset på at kroppen din fungerer akkurat som den skal. Her er alt om syklus og produkter.",
       content: [
-        { header: "Hva skjer i syklusen?", text: "Hver måned gjør livmoren seg klar til å ta imot et egg ved å bygge opp en tykk 'blodpute' (slimhinne). Hvis egget ikke blir befruktet, trenger ikke kroppen denne puta lenger. Da løsner den og kommer ut gjennom skjeden som mensblod. En vanlig syklus varer i ca. 28 dager, men i starten kan det være veldig uregelmessig. Blødningen varer som regel i 3-7 dager.", svg: SVGS.syklus, proTip: "Tips: Last ned en mens-app! Da lærer du din egen rytme å kjenne og unngår overraskelser i gymtimen." },
-        { header: "Utflod: Kroppens rens", text: "Har du merket hvitaktig eller klar væske i trusa? Det er helt normalt og sunt. Det er skjeden sin måte å vaske seg selv på for å holde bakterier unna og holde miljøet sunt. Det starter ofte et år eller to før man får sin første mens.", proTip: "Tips: Bruk et tynt truseinnlegg hvis du føler deg fuktig. Hvis utfloden lukter veldig sterkt, klør eller er grønnaktig, bør du snakke med helsesykepleier." },
-        { isProduct: true, header: "Sanitetsbind", text: "Bind klistres fast i trusa og samler opp blodet utenfor kroppen. Det finnes mange varianter: Tynne truseinnlegg for dager med lite blod, og tykke nattbind som er ekstra lange.", svg: SVGS.bind, instructions: "Fjern papiret på baksiden og klistre bindet midt i trusa. Brett 'vingene' rundt kanten. Bytt bind hver 3.-4. time, selv om det ikke ser fullt ut.", proTip: "Eksperttips: Pakk alltid det brukte bindet inn i papiret fra det nye før du kaster det i søpla. Aldri kast bind i toalettet!" },
-        { isProduct: true, header: "Tampong", text: "En tampong settes helt inn i skjeden og suger opp blodet før det kommer ut. Den er perfekt hvis du skal svømme, trene eller ha på deg stramme klær.", svg: SVGS.tampong, instructions: "Vask hendene godt! Finn en behagelig stilling (f.eks. med en fot på dolokket). Slapp helt av i musklene og dytt tampongen inn med fingeren til du ikke kjenner den lenger. Tråden skal henge ut.", proTip: "Husk: Du MÅ bytte tampong minst hver 8. time for å unngå infeksjon (TSS)." },
-        { isProduct: true, header: "Menskopp", text: "En myk kopp laget av medisinsk silikon. Den fanger opp blodet i stedet for å suge det opp. Den er ekstremt miljøvennlig, sparer masse penger, og kan sitte inne i opptil 12 timer om gangen.", svg: SVGS.menskopp, instructions: "Vask hender. Brett koppen sammen (som en C eller U). Sett den inn og la den folde seg ut. For å ta den ut: Klem bunnen for å fjerne vakuum.", proTip: "Det krever ofte litt øvelse (2-3 perioder) å bli venn med koppen. Prøv gjerne i dusjen de første gangene." }
+        { header: "Hva skjer i syklusen?", text: "Hver måned gjør livmoren seg klar til å ta imot et egg ved å bygge opp en tykk 'blodpute' (slimhinne). Hvis egget ikke blir befruktet, trenger ikke kroppen denne puta lenger. Da løsner den og kommer ut gjennom skjeden som mensblod. En vanlig syklus varer i ca. 28 dager, men i starten kan det være uregelmessig. Blødningen varer som regel i 3-7 dager.", svg: SVGS.syklus, proTip: "Tips: Last ned en mens-app! Da lærer du din egen rytme å kjenne og unngår overraskelser i gymtimen." },
+        { header: "Utflod: Kroppens rens", text: "Har du merket hvitaktig eller klar væske i trusa? Det er helt normalt og sunt. Det er skjeden sin måte å vaske seg selv på for å holde bakterier unna og holde miljøet sunt. Det starter ofte et år eller to før man får sin første mens.", proTip: "Tips: Bruk et tynt truseinnlegg hvis du føler deg fuktig. Hvis utfloden begynner å lukter sterkt eller endrer farge, bør du snakke med helsesykepleier." },
+        { isProduct: true, header: "Sanitetsbind", text: "Bind klistres fast i trusa og samler opp blodet utenfor kroppen. Det finnes mange varianter: Tynne truseinnlegg, bind med vinger for sikkerhet, og tykke nattbind som er ekstra lange for dager med mye blod.", svg: SVGS.bind, instructions: "Fjern papiret på baksiden og klistre bindet midt i trusa. Brett 'vingene' rundt kanten. Bytt bind hver 3.-4. time, selv om det ikke ser fullt ut. Da føler du deg freshere og unngår lukt.", proTip: "Eksperttips: Pakk alltid det brukte bindet inn i papiret fra det nye før du kaster det i søpla. Aldri kast bind i toalettet – da tetter rørene seg!" },
+        { isProduct: true, header: "Tampong", text: "En tampong settes helt inn i skjeden og suger opp blodet før det kommer ut. Den er perfekt hvis du skal svømme, trene eller ha på deg stramme klær.", svg: SVGS.tampong, instructions: "Vask hendene godt! Finn en behagelig stilling (f.eks. med en fot på dolokket). Slapp helt av i musklene og dytt tampongen inn med fingeren til du ikke kjenner den lenger. Tråden skal henge ut.", proTip: "Start med den minste størrelsen (Mini) når du øver deg. Husk: Du MÅ bytte tampong minst hver 8. time for å unngå infeksjon (TSS)." },
+        { isProduct: true, header: "Menskopp", text: "En myk kopp laget av medisinsk silikon. Den fanger opp blodet i stedet for å suge det opp. Den er ekstremt miljøvennlig, sparer masse penger, og kan sitte inne i opptil 12 timer om gangen.", svg: SVGS.menskopp, instructions: "Vask hender. Brett koppen sammen (som en C eller U). Sett den inn og la den folde seg ut. For å ta den ut: Klem bunnen for å fjerne vakuumet.", proTip: "Det krever ofte litt øvelse (2-3 perioder) å bli venn med koppen. Prøv gjerne i dusjen de første gangene." }
       ]
     },
     jenter: {
       title: "Jenter & Kroppen",
       intro: "Utover mensen skjer det store endringer i form og følelse når østrogenet tar kontroll.",
       content: [
-        { header: "Brystutvikling", text: "Det starter ofte med små, ømme 'knopper' under brystvortene. Det er helt vanlig at det ene brystet vokser raskere enn det andre i starten.", svg: SVGS.bryster, proTip: "Bruk en myk bomullstopp eller sports-BH hvis brystene føles ømme når du beveger deg." },
-        { header: "Nye kurver", text: "Bekkenet utvider seg, og kroppen lagrer naturlig mer fett på hofter, lår og rumpe. Dette er ikke 'å bli tjukk' – det er kroppen som bygger den voksne kvinneformen.", svg: SVGS.kurver },
+        { header: "Brystutvikling", text: "Det starter ofte med små, ømme 'knopper' under brystvortene. Det er helt vanlig at det ene brystet vokser raskere enn det andre i starten, og de kan ende opp med å ha ulik størrelse hele livet.", svg: SVGS.bryster, proTip: "Bruk en myk bomullstopp eller sports-BH hvis brystene føles ømme når du beveger deg eller i gymmen." },
+        { header: "Nye kurver", text: "Bekkenet utvider seg, og kroppen lagrer naturlig mer fett på hofter, lår og rumpe. Dette er ikke 'å bli tjukk' – det er kroppen som bygger den voksne kvinneformen som er nødvendig for å fungere.", svg: SVGS.kurver },
         { header: "Hårvekst", text: "Det begynner å vokse hår på kjønnet, under armene og på beina. Dette håret er ofte mørkere og stivere enn det du hadde før.", proTip: "Barbering er et valg, ikke et krav! Det er like normalt å barbere seg som å la det være helt naturlig." }
       ]
     },
@@ -215,24 +216,24 @@ const LifeGuideApp = ({ onBack }) => {
       title: "Gutter & Kroppen",
       intro: "Testosteronet jobber på høygir for å bygge om kroppen din på rekordtid.",
       content: [
-        { header: "Stemmeskifte: 'Pipingen'", text: "Strupehodet vokser og stemmebåndene blir lengre og tykkere. Da blir stemmen dypere. Mens dette skjer, kan stemmen plutselig 'sprekker' og bli lys midt i en setning.", svg: SVGS.larynx, proTip: "Hvis stemmen din piper i timen: Bare smil og snakk videre. Det skjer absolutt alle gutter!" },
-        { header: "Penis og testikler", text: "Det første tegnet på pubertet er ofte at testiklene vokser og pungen endrer farge. Senere vokser penis i både lengde og tykkelse.", proTip: "Husk: Det er enorme variasjoner på hva som er 'normal' størrelse. Ikke sammenlign deg med andre i dusjen." },
-        { header: "Spontane ereksjoner", text: "Plutselig blir penis stiv uten at du har tenkt på noe spesielt. Det kan skje på bussen eller i klasserommet. Det er kroppens måte å teste at systemet fungerer.", proTip: "Pust rolig, tenk på noe kjedelig (som matte), og bruk sekken som 'skjold' i fanget til det går over." }
+        { header: "Stemmeskifte: 'Pipingen'", text: "Strupehodet vokser og stemmebåndene blir lengre og tykkere. Det er som å bytte ut fiolinstrenger med bass-strenger. Mens dette skjer, kan stemmen plutselig 'sprekker' og bli lys midt i en setning.", svg: SVGS.larynx, proTip: "Hvis stemmen din piper i timen: Bare smil og snakk videre. Det skjer absolutt alle gutter og er et tegn på at du vokser!" },
+        { header: "Penis og testikler", text: "Det første tegnet på pubertet er ofte at testiklene vokser og pungen endrer farge til å bli mørkere. Senere vokser penis i både lengde og tykkelse.", proTip: "Husk: Det er enorme variasjoner på hva som er 'normal' størrelse. Ikke sammenlign deg med andre i dusjen – alle utvikler seg ulikt." },
+        { header: "Spontane ereksjoner", text: "Plutselig blir penis stiv uten at du har tenkt på noe spesielt. Det kan skje på bussen eller i klasserommet. Det er kroppens måte å teste at systemet fungerer.", proTip: "Skjer det i klasserommet? Pust rolig, tenk på noe kjedelig (som matte), og bruk sekken som 'skjold' i fanget til det går over." }
       ]
     },
     hud: {
       title: "Hud, Hår & Svette",
       intro: "Kjertlene dine går amok i puberteten. Her er din overlevelsesguide.",
       content: [
-        { header: "Kviser: Sannheten", text: "Hormonene får huden til å lage ekstra mye fett (talg). Når porer tettes av dette fettet og døde hudceller, oppstår kviser. Det skyldes **ikke** dårlig vasking.", svg: SVGS.hud_pore, proTip: "Vask ansiktet mildt morgen og kveld. Og det viktigste: IKKE klem! Det gir bare arr og mer kviser." },
-        { header: "Svette og lukt", text: "Du har fått nye svettekjertler som reagerer på følelser og stress. Svetten i seg selv lukter ingenting før den treffer bakterier på huden.", instructions: "Daglig vask av armhulene med mild såpe og en god deodorant gjør jobben.", proTip: "Visste du at antiperspirant fungerer best hvis du tar den på om kvelden før du legger deg?" }
+        { header: "Kviser: Sannheten", text: "Hormonene får huden til å lage ekstra mye fett (talg). Når porer tettes av dette fettet og døde hudceller, oppstår kviser. Det skyldes **ikke** dårlig vasking.", svg: SVGS.hud_pore, proTip: "Vask ansiktet mildt morgen og kveld. Og det viktigste: IKKE klem! Det presser bakteriene dypere ned og gir stygge arr." },
+        { header: "Svette og lukt", text: "Du har fått nye svettekjertler som reagerer på følelser og stress. Svetten i seg selv lukter ingenting før den treffer bakterier på huden – det er da det begynner å lukte 'voksent'.", instructions: "Daglig vask av armhulene med mild såpe og en god deodorant gjør jobben.", proTip: "Visste du at antiperspirant fungerer best hvis du tar den på om kvelden før du legger deg?" }
       ]
     },
     hjernen: {
       title: "Hjernen & Følelser",
       intro: "Hjernen din er under total renovering nå. Det forklarer hvorfor alt føles så intenst.",
       content: [
-        { header: "Gasspedalen vs. Bremsen", text: "Hjernen bygges om 'bakfra'. Området for følelser (amygdala) er ferdig utviklet lenge før bremsen (prefrontal cortex), som styrer fornuft. Derfor føles alt som krise akkurat nå.", svg: SVGS.hjerne, proTip: "Når du er dritforbanna: Vent 10 minutter før du sender den meldingen du har lyst til å sende." },
+        { header: "Gasspedalen vs. Bremsen", text: "Hjernen bygges om 'bakfra'. Området for følelser (amygdala) er ferdig utviklet lenge før bremsen (prefrontal cortex), som styrer fornuft. Derfor føles alt som krise akkurat nå.", svg: SVGS.hjerne, proTip: "Når du er dritforbanna: Vent 10 minutter før du sender den meldingen du har lyst til å sende. Da rekker 'bremsen' å koble seg på." },
         { header: "Søvn og Melatonin", text: "Søvnhormonet ditt produseres senere på kvelden nå enn før. Derfor er du våken sent. Men hjernen *trenger* 9 timer for å klare ombyggingen.", svg: SVGS.sove, proTip: "Legg bort mobilen 30 minutter før du skal sove – det blå lyset lurer hjernen til å tro at det er dag." }
       ]
     }
@@ -242,36 +243,113 @@ const LifeGuideApp = ({ onBack }) => {
 
   return (
     <div className="flex flex-col h-full bg-slate-50 animate-in text-slate-800">
-      <div className="bg-white border-b p-4 flex items-center gap-3 shrink-0"><button onClick={currentPage === 'home' ? onBack : () => navigate('home')} className="text-rose-500 font-extrabold p-1"><ChevronLeft/></button><div className="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-500 to-indigo-600 flex items-center justify-center text-sm text-white font-bold">🧬</div><h2 className="font-bold text-sm tracking-tight uppercase">LifeGuide</h2></div>
-      <div ref={scrollRef} className="flex-grow overflow-y-auto p-5 pb-20 space-y-4">
+      <div className="bg-white border-b p-4 flex items-center gap-3 shrink-0 text-slate-800"><button onClick={currentPage === 'home' ? onBack : () => navigate('home')} className="text-rose-500 font-extrabold p-1"><ChevronLeft/></button><div className="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-500 to-indigo-600 flex items-center justify-center text-sm text-white font-bold">🧬</div><h2 className="font-bold text-sm tracking-tight uppercase">LifeGuide</h2></div>
+      <div ref={scrollRef} className="flex-grow overflow-y-auto p-5 pb-20 space-y-4 text-slate-800">
         {currentPage === 'home' ? (
           <div>
-            <h1 className="text-xl font-black text-slate-800 mb-2">{pages.home.title}</h1>
-            <p className="text-xs text-slate-500 mb-6 font-medium leading-relaxed">{pages.home.intro}</p>
+            <h1 className="text-xl font-black text-slate-800 mb-2 leading-tight">{pages.home.title}</h1>
+            <p className="text-xs text-slate-500 mb-6 font-medium leading-relaxed font-black">{pages.home.intro}</p>
             <div className="grid grid-cols-1 gap-3">
               {pages.home.menu.map(item => (
-                <button key={item.id} onClick={() => navigate(item.id)} className="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4 text-left active:scale-95 transition-all">
+                <button key={item.id} onClick={() => navigate(item.id)} className="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4 text-left active:scale-95 transition-all text-slate-800">
                   <div className={`w-12 h-12 rounded-2xl ${item.color} flex items-center justify-center text-xl font-bold shadow-sm`}>{item.icon}</div>
-                  <div className="flex flex-col"><span className="font-bold text-slate-700 text-sm">{item.label}</span><span className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">Åpne guide ❯</span></div>
+                  <div className="flex flex-col"><span className="font-bold text-slate-700 text-sm">{item.label}</span><span className="text-[10px] text-slate-400 font-bold uppercase tracking-tight font-black">Åpne guide ❯</span></div>
                 </button>
               ))}
             </div>
           </div>
         ) : (
-          <div className="animate-in pb-12">
+          <div className="animate-in pb-12 text-slate-800">
             <h1 className="text-2xl font-black text-slate-800 mb-2 leading-tight">{pages[currentPage].title}</h1>
-            <p className="text-sm text-slate-500 mb-8 font-medium leading-relaxed">{pages[currentPage].intro}</p>
+            <p className="text-sm text-slate-500 mb-8 font-medium leading-relaxed text-slate-800 font-black">{pages[currentPage].intro}</p>
             {pages[currentPage].content.map((s, i) => (
-              <div key={i} className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm mb-8">
-                {s.isProduct && <span className="inline-block px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-[10px] font-black uppercase mb-4 tracking-widest">Hygieneprodukt</span>}
+              <div key={i} className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm mb-8 text-slate-800">
+                {s.isProduct && <span className="inline-block px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-[10px] font-black uppercase mb-4 tracking-widest font-black">Hygieneprodukt</span>}
                 <h3 className="font-black text-lg text-slate-800 mb-4 leading-tight">{s.header}</h3>
                 <p className="text-sm text-slate-600 leading-relaxed mb-6 font-medium">{s.text}</p>
                 {s.svg && <div className="w-full aspect-[4/3] bg-slate-50 rounded-3xl flex items-center justify-center p-6 mb-6 border border-slate-100">{s.svg}</div>}
-                {s.instructions && <div className="bg-sky-50 p-5 rounded-2xl border-l-4 border-sky-500 mb-5 text-xs text-sky-900 leading-relaxed font-medium"><strong>Slik gjør du:</strong> {s.instructions}</div>}
-                {s.proTip && <div className="bg-pink-50 p-5 rounded-2xl border-l-4 border-pink-500 text-xs text-pink-900 font-medium leading-relaxed italic"><strong>Eksperttips:</strong> {s.proTip}</div>}
+                {s.instructions && <div className="bg-sky-50 p-5 rounded-2xl border-l-4 border-sky-500 mb-5 text-xs text-sky-900 leading-relaxed font-medium font-bold italic"><strong>Slik gjør du:</strong> {s.instructions}</div>}
+                {s.proTip && <div className="bg-pink-50 p-5 rounded-2xl border-l-4 border-pink-500 text-xs text-pink-900 font-medium leading-relaxed italic font-black font-black"><strong>Eksperttips:</strong> {s.proTip}</div>}
               </div>
             ))}
             <button onClick={() => navigate('home')} className="w-full p-4 bg-indigo-600 text-white rounded-3xl font-black shadow-lg mt-4 uppercase text-xs tracking-widest active:scale-95 transition-all">Tilbake til meny</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// --- APP: QUIZ (15 SPØRSMÅL) ---
+const QuizApp = ({ onBack, onComplete, setStats }) => {
+  const [qIndex, setQIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [finished, setFinished] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [feedback, setFeedback] = useState(null);
+
+  const questions = [
+    { q: "Hva styrer de sterke følelsene dine i puberteten før fornuften tar over?", options: ["Amygdala", "Magesekken", "Lillehjernen"], a: 0, info: "Amygdala er følelsessenteret i hjernen din." },
+    { q: "Hvem har hovedansvaret hvis en privat video deles ulovlig i en chat?", options: ["Den som ble filmet", "Internett", "Den som sprer den"], a: 2, info: "Den som sprer krenkende innhold uten samtykke har ansvaret." },
+    { q: "Hvor ofte bør man bytte tampong for å unngå sykdom?", options: ["Hver 24. time", "Minst hver 8. time", "Når den føles tung"], a: 1, info: "Dette forebygger infeksjoner som TSS." },
+    { q: "Hva skjer i stemmeskiftet hos gutter?", options: ["Stemmebåndene blir kortere", "Tunga vokser", "Stemmebåndene vokser og blir lengre"], a: 2, info: "Lengre stemmebånd gir dypere basstemme." },
+    { q: "Hva betyr 'samtykke' i seksualitet?", options: ["Et tydelig og frivillig JA", "At man ikke sier nei", "At man har vært sammen lenge"], a: 0, info: "Bare et ekte ja er et ja!" },
+    { q: "Er det lov å dele bilder eller videoer av andre i dusjen?", options: ["Nei, det er straffbart", "Ja, hvis det er gøy", "Bare hvis man sletter det"], a: 0, info: "Dette er et alvorlig lovbrudd." },
+    { q: "Hva er melatonin i puberteten?", options: ["Et hormon som gjør deg våken", "Et søvnhormon som lages senere om kvelden", "En type kviser"], a: 1, info: "Derfor blir man trøtt senere i tenårene." },
+    { q: "Hvor mye søvn trenger en tenåring vanligvis?", options: ["ca. 9 timer", "6 timer", "12 timer"], a: 0, info: "Hjernen trenger mye hvile for ombyggingen." },
+    { q: "Hva er hvit utflod?", options: ["Skjedens måte å rense seg selv på", "En type sykdom", "Noe bare gutter får"], a: 0, info: "Det er helt sunt og normalt for jenter." },
+    { q: "Hva bør du gjøre hvis en venn blir mobbet i chatten?", options: ["Ikke gjøre noe", "Le med", "Si ifra eller støtte vennen"], a: 2, info: "Å være en alliert betyr alt." },
+    { q: "Hva betyr 'skeiv'?", options: ["At man går rart", "Paraplybegrep for LHBT+-mangfold", "At man er usikker"], a: 1, info: "Et ord for mangfold i identitet." },
+    { q: "Hva er en spontan ereksjon?", options: ["At man vil ha sex", "En feil i kroppen", "At penis blir stiv uten spesiell grunn"], a: 2, info: "Det skjer tilfeldig og er helt normalt." },
+    { q: "Hva er hovedgrunnen til kviser?", options: ["Hormoner", "Sjokolade", "Dårlig hygiene"], a: 0, info: "Det er biologisk, ikke din feil!" },
+    { q: "Hvis noen sender nakenbilde du ikke vil ha?", options: ["Vise det til venner", "Si fra til en voksen du stoler på", "Ingenting"], a: 1, info: "Involver en trygg voksen." },
+    { q: "Er det normalt at jenters bryster vokser i ulikt tempo?", options: ["Ja, det er veldig vanlig", "Nei, aldri", "Bare ved sykdom"], a: 0, info: "Kroppen er sjelden helt symmetrisk." }
+  ];
+
+  const handleAnswer = (idx) => {
+    setSelected(idx);
+    const correct = idx === questions[qIndex].a;
+    setFeedback(correct ? "Riktig! ✅ " + questions[qIndex].info : "Feil. ❌ " + questions[qIndex].info);
+    if (correct) setScore(s => s + 1);
+  };
+
+  const next = () => {
+    if (qIndex < questions.length - 1) { setQIndex(qIndex + 1); setSelected(null); setFeedback(null); }
+    else { setFinished(true); onComplete(); }
+  };
+
+  if (finished) {
+    return (
+      <div className="flex flex-col h-full bg-indigo-600 text-white animate-in p-8 items-center justify-center text-center">
+        <Trophy size={80} className="text-yellow-400 mb-6 drop-shadow-lg" />
+        <h2 className="text-3xl font-black mb-2 uppercase tracking-tighter">Fullført!</h2>
+        <p className="text-lg mb-8 italic opacity-90">Du fikk {score} av 15 riktige svar.</p>
+        <button onClick={onBack} className="w-full p-4 bg-white text-indigo-600 rounded-3xl font-black uppercase shadow-xl active:scale-95 transition-all">Ferdig</button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col h-full bg-slate-50 animate-in text-slate-800">
+      <div className="bg-purple-600 p-4 text-white font-bold flex items-center gap-3 shrink-0 shadow-md">
+        <button onClick={onBack}><ChevronLeft /></button>
+        <span>HelseQuiz</span>
+      </div>
+      <div className="flex-grow p-6 overflow-y-auto pb-24 text-slate-800">
+        <div className="mb-4 flex justify-between items-center text-[10px] font-black text-slate-400 uppercase tracking-widest font-black text-slate-800 font-black">
+           <span>Spørsmål {qIndex + 1} / 15</span>
+           <span>Riktige: {score}</span>
+        </div>
+        <h3 className="text-lg font-bold text-slate-800 mb-6 leading-tight min-h-[60px] text-slate-800">{questions[qIndex].q}</h3>
+        <div className="space-y-3">
+          {questions[qIndex].options.map((o, i) => (
+            <button key={i} disabled={selected !== null} onClick={() => handleAnswer(i)} className={`w-full p-4 rounded-xl text-left text-sm font-bold border-2 transition-all shadow-sm ${selected === null ? 'bg-white border-transparent hover:border-purple-200' : i === questions[qIndex].a ? 'bg-green-100 border-green-500 text-green-800' : selected === i ? 'bg-red-100 border-red-500 text-red-800' : 'bg-white opacity-50 border-transparent text-slate-400'}`}>{o}</button>
+          ))}
+        </div>
+        {feedback && (
+          <div className="mt-8 p-5 bg-white rounded-3xl shadow-xl border border-slate-100 animate-in text-slate-800">
+            <p className="text-xs leading-relaxed mb-4 font-medium text-slate-800">{feedback}</p>
+            <button onClick={next} className="w-full p-4 bg-purple-600 text-white rounded-xl font-bold uppercase text-xs tracking-widest shadow-lg">Neste ❯</button>
           </div>
         )}
       </div>
@@ -301,90 +379,13 @@ const NotepadApp = ({ onBack, onComplete }) => {
         <div className="bg-white p-5 rounded-[2rem] shadow-sm mb-6 border border-yellow-100">
           <p className="text-sm text-slate-700 leading-relaxed font-medium">
             <span className="font-black block mb-2 text-indigo-600 uppercase text-[10px] tracking-widest underline italic">Oppgave til læreren:</span>
-            Reflekter over det som skjedde med Isak og Liam de siste dagene. Hvordan påvirket dine valg situasjonen? Hva ville du gjort annerledes i virkeligheten?
+            Reflekter over det som skjedde med Isak og Liam de siste dagene. Hvordan påvirket dine valg situasjonen? Hva lærte du om grenser og nettvett?
           </p>
         </div>
         <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Skriv dine tanker her..." className="w-full h-64 p-5 rounded-[2rem] border border-slate-200 shadow-inner text-sm focus:ring-2 focus:ring-yellow-400 outline-none resize-none bg-white text-slate-800 font-medium"></textarea>
         <button onClick={handleCopy} className="w-full mt-6 p-4 rounded-3xl font-black shadow-lg transition-all bg-indigo-600 text-white active:scale-95 flex items-center justify-center gap-3 uppercase text-xs tracking-widest">
           {copied ? <><Check size={18}/> Kopiert!</> : <><Copy size={18}/> Kopier og send på Teams</>}
         </button>
-      </div>
-    </div>
-  );
-};
-
-// --- APP: QUIZ (15 SPØRSMÅL) ---
-const QuizApp = ({ onBack, onComplete, setStats }) => {
-  const [qIndex, setQIndex] = useState(0);
-  const [score, setScore] = useState(0);
-  const [finished, setFinished] = useState(false);
-  const [selected, setSelected] = useState(null);
-  const [feedback, setFeedback] = useState(null);
-
-  const questions = [
-    { q: "Hva styrer de sterke følelsene dine før fornuften tar over?", options: ["Amygdala", "Mavesekken", "Lillehjernen"], a: 0, info: "Amygdala er følelsessenteret i hjernen." },
-    { q: "Hvem har ansvaret hvis en privat video deles ulovlig?", options: ["Læreren", "Den som ble filmet", "Den som sprer videoen"], a: 2, info: "Ansvaret ligger alltid hos den som sprer innholdet uten samtykke." },
-    { q: "Hvor ofte bør man bytte tampong?", options: ["Annenhver dag", "Minst hver 8. time", "Når man dusjer"], a: 1, info: "Hver 8. time er viktig for å forebygge infeksjon (TSS)." },
-    { q: "Hva skjer under stemmeskiftet hos gutter?", options: ["Stemmebåndene vokser", "Stemmen blir alltid lysere", "Tunga blir kortere"], a: 0, info: "Lengre stemmebånd gir dypere stemme." },
-    { q: "Hva betyr 'samtykke'?", options: ["At ingen sier nei", "Et frivillig og tydelig JA", "At man har vært sammen lenge"], a: 1, info: "Bare et ekte ja er et ja!" },
-    { q: "Er det lov å dele bilder av andre i dusjen?", options: ["Ja, det er morsomt", "Nei, det er straffbart", "Bare hvis det slettes etterpå"], a: 1, info: "Det er ulovlig ifølge straffeloven." },
-    { q: "Hva er melatonin?", options: ["Et søvnhormon", "Et kvisemiddel", "En del av mensen"], a: 0, info: "Hjernen lager det senere om kvelden i puberteten." },
-    { q: "Hvor mye søvn trenger en tenåring vanligvis?", options: ["6 timer", "ca. 9 timer", "12 timer"], a: 1, info: "Hjernen bygges om og trenger mye hvile." },
-    { q: "Hva er hvit utflod?", options: ["Tegn på sykdom", "Noe bare gutter har", "Skjedens måte å rense seg selv på"], a: 2, info: "Det er helt sunt og normalt for jenter." },
-    { q: "Hva bør du gjøre ved mobbing i en chat?", options: ["Le med", "Støtte den utsatte eller si fra", "Ignorere det helt"], a: 1, info: "Støtte betyr alt for den som står alene." },
-    { q: "Hva betyr 'skeiv'?", options: ["LHBT+-mangfold", "At man er syk", "At man går rart"], a: 0, info: "Et ord for alle som bryter med normer for kjønn/seksualitet." },
-    { q: "Hva er en spontan ereksjon?", options: ["At man vil ha sex", "Penis blir stiv uten grunn", "Et tegn på sykdom"], a: 1, info: "Det er helt tilfeldig og skjer alle gutter." },
-    { q: "Hva er hovedgrunnen til kviser?", options: ["Hormoner", "Sjokolade", "Dårlig hygiene"], a: 0, info: "Det er biologisk, ikke din feil!" },
-    { q: "Hvis noen sender nakenbilde du ikke vil ha?", options: ["Del det videre", "Si fra til en voksen du stoler på", "Ingenting"], a: 1, info: "Involver en voksen for å beskytte deg selv." },
-    { q: "Er det normalt at brystene vokser ulikt?", options: ["Ja, veldig vanlig", "Nei, aldri", "Bare ved sykdom"], a: 0, info: "Kroppen er sjelden symmetrisk i vekst." }
-  ];
-
-  const handleAnswer = (idx) => {
-    setSelected(idx);
-    const correct = idx === questions[qIndex].a;
-    setFeedback(correct ? "Riktig! ✅ " + questions[qIndex].info : "Feil. ❌ " + questions[qIndex].info);
-    if (correct) setScore(s => s + 1);
-  };
-
-  const next = () => {
-    if (qIndex < questions.length - 1) { setQIndex(qIndex + 1); setSelected(null); setFeedback(null); }
-    else { setFinished(true); onComplete(); }
-  };
-
-  if (finished) {
-    return (
-      <div className="flex flex-col h-full bg-indigo-600 text-white animate-in p-8 items-center justify-center text-center">
-        <Trophy size={80} className="text-yellow-400 mb-6 drop-shadow-lg" />
-        <h2 className="text-3xl font-black mb-2 uppercase tracking-tighter">Fullført!</h2>
-        <p className="text-lg mb-8 italic opacity-90">Du fikk {score} av 15 riktige svar.</p>
-        <button onClick={onBack} className="w-full p-4 bg-white text-indigo-600 rounded-3xl font-black uppercase shadow-xl active:scale-95 transition-all">Avslutt</button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col h-full bg-slate-50 animate-in text-slate-800">
-      <div className="bg-purple-600 p-4 text-white font-bold flex items-center gap-3 shrink-0 shadow-md">
-        <button onClick={onBack}><ChevronLeft /></button>
-        <span>HelseQuiz</span>
-      </div>
-      <div className="flex-grow p-6 overflow-y-auto pb-24">
-        <div className="mb-4 flex justify-between items-center text-[10px] font-black text-slate-400 uppercase tracking-widest">
-           <span>Spørsmål {qIndex + 1} / 15</span>
-           <span>Riktige: {score}</span>
-        </div>
-        <h3 className="text-lg font-bold text-slate-800 mb-6 leading-tight min-h-[60px]">{questions[qIndex].q}</h3>
-        <div className="space-y-3">
-          {questions[qIndex].options.map((o, i) => (
-            <button key={i} disabled={selected !== null} onClick={() => handleAnswer(i)} className={`w-full p-4 rounded-xl text-left text-sm font-bold border-2 transition-all shadow-sm ${selected === null ? 'bg-white border-transparent hover:border-purple-200 text-slate-700' : i === questions[qIndex].a ? 'bg-green-100 border-green-500 text-green-800' : selected === i ? 'bg-red-100 border-red-500 text-red-800' : 'bg-white opacity-50 border-transparent text-slate-400'}`}>{o}</button>
-          ))}
-        </div>
-        {feedback && (
-          <div className="mt-8 p-5 bg-white rounded-3xl shadow-xl border border-slate-100 animate-in text-slate-800">
-            <p className="text-xs leading-relaxed mb-4 font-medium">{feedback}</p>
-            <button onClick={next} className="w-full p-4 bg-purple-600 text-white rounded-xl font-bold uppercase text-xs tracking-widest shadow-lg">Neste ❯</button>
-          </div>
-        )}
       </div>
     </div>
   );
@@ -450,7 +451,7 @@ const MockChat = ({ playerName, currentDay, onBack, setStats, setFlags, chatHist
 
   return (
     <div className="flex flex-col h-full bg-white animate-in text-slate-800">
-      <div className="bg-green-600 p-4 text-white font-bold flex items-center gap-3 shrink-0"><button onClick={onBack}><ChevronLeft /></button><span>Klassechat 🔥</span></div>
+      <div className="bg-green-600 p-4 text-white font-bold flex items-center gap-3 shrink-0 shadow-lg"><button onClick={onBack}><ChevronLeft /></button><span>Klassechat 🔥</span></div>
       <div ref={scrollRef} className="flex-grow p-4 overflow-y-auto space-y-4 bg-slate-50">
         {chatHistory.map((m, i) => (
           <div key={i} className={`flex flex-col ${m.side === 'right' ? 'items-end' : 'items-start'}`}>
@@ -458,14 +459,14 @@ const MockChat = ({ playerName, currentDay, onBack, setStats, setFlags, chatHist
             <div className={`p-3 rounded-2xl text-xs max-w-[85%] shadow-sm font-medium ${m.side === 'right' ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-white text-slate-800 border border-slate-100 rounded-tl-none'}`}>{m.text}</div>
           </div>
         ))}
-        {isTyping && <div className="flex gap-1.5 p-3 bg-white rounded-xl w-fit shadow-sm"><div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce"></div><div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce delay-75"></div><div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce delay-150"></div></div>}
+        {isTyping && <div className="flex gap-1.5 p-3 bg-white rounded-xl w-fit shadow-sm"><div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce text-slate-800"></div><div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce delay-75 text-slate-800"></div><div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce delay-150 text-slate-800"></div></div>}
       </div>
       {chatHistory.length >= (currentDay === 1 ? 5 : (currentDay === 2 ? 5 : 3)) && chatPhase === 0 && (
         <div className="p-4 bg-white border-t space-y-2 animate-in shadow-2xl">
           {currentDay === 1 ? (
             <>
               <button onClick={() => handleChoice("Haha, ja send! Vil se! 😂", { empathy: -20, socialStatus: 10 }, 'laughed', { sender: "Jonas", text: "Sender på DM nå! 😉" })} className="w-full p-3 bg-slate-50 border rounded-xl text-xs font-bold text-left hover:bg-slate-100 text-slate-700">"Haha, ja send den!"</button>
-              <button onClick={() => handleChoice("Slett den. Det er ulovlig og kjipt.", { empathy: 25, socialStatus: -5 }, 'defendedIsak', { sender: "Sara", text: "Faktisk enig. Slett den, Jonas." })} className="w-full p-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-left hover:bg-slate-100 text-slate-700">"Slett den Jonas, det er ikke greit."</button>
+              <button onClick={() => handleChoice("Slett den. Det er ulovlig og kjipt.", { empathy: 25, socialStatus: -5 }, 'defendedIsak', { sender: "Sara", text: "Faktisk enig. Slett den, Jonas." })} className="w-full p-3 bg-white border rounded-xl text-xs font-bold text-left hover:bg-slate-100 text-slate-700">"Slett den Jonas, det er ikke greit."</button>
             </>
           ) : currentDay === 2 ? (
             <>
@@ -473,7 +474,7 @@ const MockChat = ({ playerName, currentDay, onBack, setStats, setFlags, chatHist
               <button onClick={() => handleChoice("Det er Jonas sitt problem. Han filma.", { empathy: -10 }, null, { sender: "Jonas", text: "Takk for den, Alex... 🙄" })} className="w-full p-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-left hover:bg-slate-100 text-slate-700">"Det er Jonas sitt problem."</button>
             </>
           ) : (
-            <button onClick={() => handleChoice("Jeg kommer nå. Sees i klassen!", {}, null)} className="w-full p-4 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs">Gå til skolen</button>
+            <button onClick={() => handleChoice("Jeg kommer nå. Sees i klassen!", {}, null)} className="w-full p-4 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-lg">Gå til skolen</button>
           )}
         </div>
       )}
@@ -507,11 +508,24 @@ const MeldingerApp = ({ playerName, flags, currentDay, onBack, dmHistory, setDmH
 
   useEffect(() => { if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight; }, [dmHistory, isTyping]);
 
+  const handleSupport = (text, impact, finalResponse) => {
+    setDmHistory(prev => [...prev, { sender: playerName, text, side: "right" }]);
+    if (impact) setStats(s => ({ ...s, empathy: s.empathy + impact }));
+    
+    setTimeout(() => {
+        setIsTyping(true);
+        setTimeout(() => {
+            setDmHistory(prev => [...prev, { sender: "Liam", text: finalResponse, side: "left" }]);
+            setIsTyping(false);
+        }, 2000);
+    }, 800);
+  }
+
   return (
     <div className="flex flex-col h-full bg-white animate-in text-slate-800">
       <div className="bg-blue-600 p-4 text-white font-bold flex items-center gap-3 shrink-0 shadow-lg"><button onClick={onBack}><ChevronLeft /></button><span>Meldinger</span></div>
       <div ref={scrollRef} className="flex-grow p-4 overflow-y-auto space-y-4 bg-slate-50">
-        {dmHistory.length === 0 && !isTyping ? (<div className="h-full flex items-center justify-center text-slate-300 italic text-xs font-medium">Ingen meldinger akkurat nå</div>) : (
+        {dmHistory.length === 0 && !isTyping ? (<div className="h-full flex items-center justify-center text-slate-300 italic text-xs font-medium font-black uppercase text-slate-800">Ingen meldinger akkurat nå</div>) : (
           dmHistory.map((m, i) => (
             <div key={i} className={`flex flex-col ${m.side === 'right' ? 'items-end' : m.side === 'center' ? 'items-center' : 'items-start'}`}>
               <span className="text-[9px] text-gray-400 font-bold uppercase mb-1">{m.sender}</span>
@@ -521,16 +535,16 @@ const MeldingerApp = ({ playerName, flags, currentDay, onBack, dmHistory, setDmH
         )}
         {isTyping && <div className="flex gap-1.5 p-3 bg-white rounded-xl w-fit shadow-sm"><div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce"></div><div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce delay-75"></div><div className="w-1.5 h-1.5 bg-slate-300 rounded-full animate-bounce delay-150"></div></div>}
       </div>
-      {dmHistory.length > 0 && dmHistory[dmHistory.length-1].sender !== playerName && !isTyping && (
+      {dmHistory.length > 0 && dmHistory[dmHistory.length-1].sender === "Liam" && !isTyping && (
         <div className="p-4 bg-white border-t space-y-2 shadow-2xl">
-          {flags.defendedIsak && currentDay === 1 && (
-            <button onClick={() => { setDmHistory(p => [...p, { sender: playerName, text: "Takk for tilliten, Liam! ❤️ Jeg støtter deg uansett.", side: "right" }]); setStats(s => ({ ...s, empathy: s.empathy + 15 })); }} className="w-full p-3 bg-indigo-50 text-indigo-600 rounded-xl font-bold text-xs uppercase">❤️ Støtt Liam</button>
+          {currentDay === 1 && flags.defendedIsak && dmHistory.length < 4 && (
+            <button onClick={() => handleSupport("Takk for tilliten, Liam! ❤️ Jeg støtter deg uansett.", 15, "Takk Alex. Det betyr alt for meg å ha en som deg i klassen! ❤️ Ses i morgen.")} className="w-full p-3 bg-indigo-50 text-indigo-600 rounded-xl font-bold text-xs uppercase tracking-widest font-black">❤️ Støtt Liam</button>
           )}
-          {flags.laughed && currentDay === 1 && (
-            <button onClick={() => { setDmHistory(p => [...p, { sender: playerName, text: "Hahaha, sykeste videoen! 😂", side: "right" }]); }} className="w-full p-3 bg-indigo-50 text-indigo-600 rounded-xl font-bold text-xs uppercase">Svar Jonas 😂</button>
+          {currentDay === 2 && dmHistory.length < 3 && (
+            <button onClick={() => handleSupport("Så utrolig bra! Stolt av deg. 👏", 10, "Takk! Ses på skolen snart!")} className="w-full p-4 bg-green-50 text-green-600 rounded-2xl font-black text-xs uppercase tracking-widest font-black font-black uppercase">Svar Liam ❤️</button>
           )}
-          {currentDay === 2 && (
-            <button onClick={() => { onBack(); }} className="w-full p-4 bg-green-50 text-green-600 rounded-2xl font-black text-xs uppercase">Fantastisk! ❤️</button>
+          {(dmHistory.length >= (currentDay === 1 ? 4 : 3)) && (
+            <button onClick={onBack} className="w-full p-4 bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest font-black uppercase">Gå tilbake</button>
           )}
         </div>
       )}
@@ -538,7 +552,7 @@ const MeldingerApp = ({ playerName, flags, currentDay, onBack, dmHistory, setDmH
   );
 };
 
-// --- HOVED COMPONENT ---
+// --- HOVED APP ---
 export default function App() {
   const [playerName, setPlayerName] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -552,6 +566,15 @@ export default function App() {
   const [notepadCompleted, setNotepadCompleted] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [notifications, setNotifications] = useState({ chat: true, dm: false, feed: true, guide: false, radar: false });
+  const [activeToast, setActiveToast] = useState(null);
+
+  useEffect(() => {
+    if (notifications.dm) {
+      setActiveToast({ title: "Meldinger", body: "Du har fått en ny melding!", app: "dm" });
+      const timer = setTimeout(() => setActiveToast(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [notifications.dm]);
 
   const startDay = (day) => {
     setCurrentDay(day);
@@ -572,21 +595,36 @@ export default function App() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-900 p-4 font-sans text-slate-800">
         <div className="w-full max-w-[360px] bg-indigo-600 rounded-[3.5rem] border-[12px] border-slate-800 aspect-[9/19] flex flex-col items-center justify-center p-8 text-white text-center shadow-2xl relative overflow-hidden">
-          <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center text-4xl mb-6 animate-bounce shadow-inner text-white">👤</div>
-          <h2 className="text-3xl font-black mb-2 italic tracking-tighter uppercase text-white">Mobil-Sim</h2>
+          <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center text-4xl mb-6 animate-bounce shadow-inner text-white font-bold">👤</div>
+          <h2 className="text-3xl font-black mb-2 italic tracking-tighter uppercase text-white font-black font-black uppercase tracking-tighter text-white">Mobil-Sim</h2>
           <p className="text-sm mb-8 opacity-80 font-medium leading-relaxed text-white">Logg inn for å starte Alex sin pubertets-simulering.</p>
           <input type="text" value={playerName} onChange={(e) => setPlayerName(e.target.value)} placeholder="Skriv fornavn..." className="w-full p-4 rounded-2xl text-gray-900 mb-4 font-bold outline-none border-none shadow-xl text-center" />
-          <button onClick={() => playerName.trim() && setIsLoggedIn(true)} className="w-full p-4 bg-white text-indigo-600 rounded-2xl font-black uppercase tracking-widest text-xs shadow-lg active:scale-95 transition-all">Lås Opp</button>
+          <button onClick={() => playerName.trim() && setIsLoggedIn(true)} className="w-full p-4 bg-white text-indigo-600 rounded-2xl font-black uppercase tracking-widest text-xs shadow-lg active:scale-95 transition-all font-black tracking-widest text-xs font-black tracking-widest text-xs">Lås Opp</button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-slate-900 p-4 font-sans text-slate-800">
+    <div className="flex items-center justify-center min-h-screen bg-slate-900 p-4 font-sans text-slate-800 leading-relaxed">
       <div className="w-full max-w-[360px] bg-black rounded-[3.5rem] border-[12px] border-slate-800 aspect-[9/19] relative overflow-hidden flex flex-col shadow-2xl">
         <div className="flex-grow bg-slate-50 flex flex-col rounded-[2.2rem] overflow-hidden relative shadow-inner">
-          <div className="h-10 flex justify-between items-center px-8 text-[11px] font-black text-gray-400 shrink-0 bg-white/50 backdrop-blur-sm z-50">
+          
+          {/* MOBILE TOAST NOTIFICATION */}
+          {activeToast && (
+            <div 
+              onClick={() => { setActiveApp(activeToast.app); setNotifications({...notifications, [activeToast.app]: false}); setActiveToast(null); }}
+              className="absolute top-12 left-4 right-4 bg-white/95 backdrop-blur-md shadow-2xl rounded-2xl p-4 border border-indigo-100 z-[100] animate-in flex items-center gap-3 cursor-pointer border-2"
+            >
+              <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-sm font-bold text-lg">{activeToast.title === 'Meldinger' ? '👤' : '💬'}</div>
+              <div className="flex-grow overflow-hidden text-left">
+                <div className="flex justify-between items-center"><span className="text-[10px] font-black uppercase text-indigo-600 tracking-widest font-black uppercase tracking-widest font-black uppercase tracking-widest">Nå</span></div>
+                <p className="text-xs font-bold text-slate-800 line-clamp-1">{activeToast.body}</p>
+              </div>
+            </div>
+          )}
+
+          <div className="h-10 flex justify-between items-center px-8 text-[11px] font-black text-gray-400 shrink-0 bg-white/50 backdrop-blur-sm z-50 font-black tracking-widest">
             <span>12:45</span><div className="flex gap-1.5 items-center"><span>📶</span><span>🔋 96%</span></div>
           </div>
           
@@ -603,15 +641,15 @@ export default function App() {
                 <AppIcon icon={<User size={24}/>} label="Profil" color="bg-slate-700" onClick={() => setActiveApp('profile')} />
 
                 <div className="col-span-4 mt-auto p-5 bg-white rounded-3xl border border-slate-100 shadow-xl text-slate-800">
-                  <h3 className="text-[10px] font-black text-center text-slate-400 uppercase tracking-widest mb-4 italic font-black">Dag {currentDay}</h3>
+                  <h3 className="text-[10px] font-black text-center text-slate-400 uppercase tracking-widest mb-4 font-black">Dag {currentDay}</h3>
                   <div className="space-y-4">
                     <StatBar label="Empati" val={stats.empathy} color="bg-blue-500" />
                     <StatBar label="Selvfølelse" val={stats.selfEsteem} color="bg-rose-500" />
                     <StatBar label="Status" val={stats.socialStatus} color="bg-green-500" />
                   </div>
-                  {currentDay === 1 && <button onClick={() => startDay(2)} className="w-full mt-6 p-4 bg-indigo-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest active:scale-95 shadow-lg">Gå til Dag 2 ❯</button>}
-                  {currentDay === 2 && <button onClick={() => startDay(3)} className="w-full mt-6 p-4 bg-indigo-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest active:scale-95 shadow-lg">Gå til Dag 3 ❯</button>}
-                  {currentDay === 3 && notepadCompleted && <button onClick={() => startDay(4)} className="w-full mt-6 p-4 bg-purple-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest animate-pulse shadow-lg">Finale: Quiz ❯</button>}
+                  {currentDay === 1 && <button onClick={() => startDay(2)} className="w-full mt-6 p-4 bg-indigo-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest active:scale-95 shadow-lg font-black tracking-widest text-[10px] uppercase">Gå til Dag 2 ❯</button>}
+                  {currentDay === 2 && <button onClick={() => startDay(3)} className="w-full mt-6 p-4 bg-indigo-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest active:scale-95 shadow-lg font-black tracking-widest text-[10px] uppercase">Gå til Dag 3 ❯</button>}
+                  {currentDay === 3 && notepadCompleted && <button onClick={() => startDay(4)} className="w-full mt-6 p-4 bg-purple-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest animate-pulse shadow-lg font-black font-black uppercase tracking-widest text-[10px]">Finale: Quiz ❯</button>}
                 </div>
               </div>
             ) : (
@@ -625,16 +663,16 @@ export default function App() {
                 {activeApp === 'quiz' && <QuizApp onBack={() => setActiveApp('home')} onComplete={() => setQuizCompleted(true)} setStats={setStats} />}
                 {activeApp === 'profile' && (
                   <div className="h-full bg-slate-900 text-white p-8 flex flex-col animate-in">
-                    <h2 className="text-2xl font-black mb-8 italic uppercase tracking-tighter text-indigo-400 underline">Din Profil</h2>
-                    <div className="space-y-4 text-xs leading-relaxed text-gray-300">
-                      <div className="p-5 bg-white/5 rounded-3xl border border-white/10 shadow-inner">
-                        <p className="font-black text-white mb-3 uppercase text-[10px] tracking-widest">Valg gjort:</p>
+                    <h2 className="text-2xl font-black mb-8 italic uppercase tracking-tighter text-indigo-400 underline font-black uppercase tracking-tighter font-black italic uppercase tracking-tighter">Din Profil</h2>
+                    <div className="space-y-4 text-xs leading-relaxed text-gray-300 font-black">
+                      <div className="p-5 bg-white/5 rounded-3xl border border-white/10 shadow-inner leading-relaxed">
+                        <p className="font-black text-white mb-3 uppercase text-[10px] tracking-widest font-black uppercase tracking-widest font-black">Handlingslogg:</p>
                         {flags.defendedIsak ? "✓ Du stod opp for Isak mot Jonas." : flags.laughed ? "⚠ Du ble med på mobbingen av Isak." : "• Du var passiv i konflikten."}
                         <br/><br/>
                         {flags.defendedIsak ? "✓ Liam stoler på deg etter at du støttet ham." : ""}
                       </div>
                     </div>
-                    <button onClick={() => setActiveApp('home')} className="mt-auto w-full p-4 bg-indigo-600 rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-xl active:scale-95 transition-all text-white">Hjem</button>
+                    <button onClick={() => setActiveApp('home')} className="mt-auto w-full p-4 bg-indigo-600 rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-xl active:scale-95 transition-all text-white font-black uppercase tracking-widest text-[10px]">Hjem</button>
                   </div>
                 )}
               </div>
