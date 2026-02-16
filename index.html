@@ -19,7 +19,7 @@ import {
   Trophy
 } from 'lucide-react';
 
-// --- SVG ILLUSTRASJONER ---
+// --- SVG ILLUSTRASJONER (LifeGuide - Garantert visning) ---
 const SVGS = {
   syklus: <svg viewBox="0 0 240 200" className="w-full h-full"><circle cx="120" cy="100" r="80" fill="none" stroke="#f1f5f9" strokeWidth="15"/><path d="M120 20 A80 80 0 0 1 200 100" fill="none" stroke="#fb7185" strokeWidth="15" strokeLinecap="round"/><text x="120" y="105" textAnchor="middle" fontSize="14" fontWeight="900" fill="#e11d48">28 DAGER</text></svg>,
   bind: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M70 30 C70 10, 170 10, 170 30 L170 150 C170 170, 70 170, 70 150 Z" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/><path d="M70 70 Q40 70 40 90 Q40 110 70 110" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/><path d="M170 70 Q200 70 200 90 Q200 110 170 110" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2"/><rect x="90" y="50" width="60" height="80" rx="30" fill="#f0f9ff" stroke="#bae6fd" strokeWidth="1" strokeDasharray="4"/></svg>,
@@ -35,7 +35,125 @@ const SVGS = {
   sove: <svg viewBox="0 0 240 180" className="w-full h-full"><path d="M60 120 Q100 110 140 120 Q180 130 220 120" stroke="#cbd5e1" strokeWidth="2" fill="none"/><text x="160" y="60" fontSize="20" fontWeight="bold" fill="#6366f1">Zzz</text></svg>
 };
 
-// --- QUIZ APP (DAG 4 - 15 Spørsmål) ---
+// --- LifeGuide Komponent (FULL VERSJON RESTORED) ---
+const LifeGuideApp = ({ onBack }) => {
+  const [currentPage, setCurrentPage] = useState('home');
+  const scrollRef = useRef(null);
+
+  const pages = {
+    home: {
+      title: "Din guide til ungdomstiden",
+      intro: "Puberteten er som en software-oppdatering for hele systemet ditt. Her får du de ærlige svarene på alt du lurer på.",
+      menu: [
+        { id: 'mensen', label: "Mensen & Utflod", icon: "🩸", color: "bg-rose-100 text-rose-600" },
+        { id: 'jenter', label: "Jenter & Kroppen", icon: "🌸", color: "bg-pink-100 text-pink-600" },
+        { id: 'gutter', label: "Gutter & Kroppen", icon: "🗣️", color: "bg-blue-100 text-blue-600" },
+        { id: 'hud', label: "Hud, Hår & Svette", icon: "🧼", color: "bg-emerald-100 text-emerald-600" },
+        { id: 'hjernen', label: "Hjernen & Følelser", icon: "🧠", color: "bg-purple-100 text-purple-600" }
+      ]
+    },
+    mensen: {
+      title: "Mensen & Utflod",
+      intro: "Mensen er beviset på at kroppen din fungerer akkurat som den skal. Her er alt om syklus og produkter.",
+      content: [
+        { header: "Hva skjer i syklusen?", text: "Hver måned gjør livmoren seg klar til å ta imot et egg ved å bygge opp en tykk 'blodpute' (slimhinne). Hvis egget ikke blir befruktet, trenger ikke kroppen denne puta lenger. Da løsner den og kommer ut gjennom skjeden som mensblod. En vanlig syklus varer i ca. 28 dager, men i starten kan det være uregelmessig. Blødningen varer som regel i 3-7 dager.", svg: SVGS.syklus, proTip: "Last ned en gratis mens-app (f.eks. Clue eller Flo) på telefonen din. Da lærer du din egen rytme å kjenne og unngår overraskelser i gymtimen!" },
+        { header: "Utflod: Kroppens eget rensesystem", text: "Har du merket hvitaktig eller klar væske i trusa? Det er helt normalt og et tegn på at du er sunn! Det heter utflod. Det er skjeden sin geniale måte å vaske seg selv på for å holde bakterier unna. Det starter ofte et år eller to før man får sin første mens.", proTip: "Bruk et tynt truseinnlegg hvis du føler deg fuktig. NB: Hvis utfloden begynner å lukte veldig stramt, klør, eller endrer farge til grønn/gul, bør du ta en prat med helsesykepleier eller lege." },
+        { isProduct: true, header: "Sanitetsbind", text: "Dette er det vanligste produktet å starte med. Bind klistres fast i trusa og samler opp blodet utenfor kroppen. Det finnes mange varianter: Tynne truseinnlegg for dager med lite blod, og tykke nattbind som er ekstra lange for å hindre lekkasje når du sover.", svg: SVGS.bind, instructions: "Fjern papiret på baksiden og klistre bindet midt i trusa. Brett 'vingene' rundt kanten. Bytt bind hver 3.-4. time, selv om det ikke ser fullt ut. Da føler du deg freshere og unngår lukt.", proTip: "Pakk alltid det brukte bindet inn i papiret fra det nye før du kaster det i søpla. Aldri kast bind i toalettet – da tetter rørene seg, og det blir superflaut!" },
+        { isProduct: true, header: "Tampong", text: "En tampong er en liten 'plugg' av bomull som settes helt inn i skjeden og suger opp blodet før det kommer ut. Den er genial hvis du skal svømme, trene eller ha på deg stramme klær. Når den sitter riktig, skal du ikke kjenne den i det hele tatt!", svg: SVGS.tampong, instructions: "Vask hendene godt! Finn en behagelig stilling (f.eks. sett ene foten på dolokket). Slapp helt av i musklene og dytt tampongen inn med fingeren til du ikke kjenner den lenger. Tråden skal henge ut.", proTip: "Start med den minste størrelsen (Mini) når du øver deg. Husk: Du MÅ bytte tampong minst hver 8. time for å unngå infeksjon (TSS)." },
+        { isProduct: true, header: "Menskopp", text: "En myk, klokkeformet kopp laget av medisinsk silikon. Den fanger opp blodet i stedet for å suge det opp. Den er ekstremt miljøvennlig, sparer deg for masse penger, og kan sitte inne i opptil 12 timer om gangen.", svg: SVGS.menskopp, instructions: "Vask hender. Brett koppen sammen (som en C eller U). Sett den inn og la den folde seg ut. For å ta den ut: Klem bunnen for å fjerne vakuumet, og dra forsiktig.", proTip: "Det krever ofte litt øvelse (2-3 perioder) å bli venn med koppen. Prøv gjerne i dusjen de første gangene så blir det mindre søl." },
+        { isProduct: true, header: "Menstruasjonstruse", text: "Dette ser ut som en helt vanlig, fin truse, men den har et innebygd absorberende lag som suger opp blod og holder huden tørr. Den kan vaskes i maskin og brukes om og om igjen.", svg: SVGS.truse, proTip: "Disse er helt geniale å bruke om natta hvis du er redd for å lekke på lakenet, eller som en ekstra sikkerhet sammen med tampong." }
+      ]
+    },
+    jenter: {
+      title: "Jenter & Kroppen",
+      intro: "Det skjer utrolig mye mer enn bare mensen når østrogenet tar kontroll. Her er det du trenger å vite.",
+      content: [
+        { header: "Brystutvikling", text: "Det starter ofte med små, ømme 'knopper' under brystvortene. Det kan gjøre vondt hvis du kommer borti dem. Det er helt vanlig at det ene brystet vokser raskere enn det andre i starten, og at de ender opp med å være litt forskjellige i størrelse.", svg: SVGS.bryster, proTip: "Bruk en myk bomullstopp eller sports-BH hvis brystene føles ømme når du beveger deg eller i gymmen. Du trenger ikke 'ekte' BH før du selv vil." },
+        { header: "Nye kurver", text: "Du vil merke at buksene begynner å stramme på nye steder. Bekkenet utvider seg, og kroppen lagrer naturlig mer fett på hofter, lår og rumpe. Dette er ikke 'å bli tjukk' – det er kroppen som bygger den voksne kvinneformen som er nødvendig for å fungere.", svg: SVGS.kurver },
+        { header: "Hårvekst", text: "Det begynner å vokse hår på kjønnet, under armene og på beina. Dette håret er ofte mørkere og stivere enn det du hadde før. Det er der for å beskytte huden og regulere temperatur.", proTip: "Barbering er et valg, ikke et krav! Det er like normalt å barbere seg som å la det være helt naturlig. Gjør det DU føler deg vel med." }
+      ]
+    },
+    gutter: {
+      title: "Gutter & Kroppen",
+      intro: "Testosteronet jobber på høygir for å bygge om kroppen din på rekordtid.",
+      content: [
+        { header: "Stemmeskifte: 'Pipingen'", text: "Strupehodet vokser og stemmebåndene blir lengre og tykkere. Det er som å bytte ut fiolinstrenger med bass-strenger. Mens dette skjer, kan stemmen plutselig 'sprekke' og bli lys midt i en setning.", svg: SVGS.larynx, proTip: "Hvis stemmen din piper i timen: Bare smil og snakk videre. Det skjer absolutt alle gutter og er et tegn på at du vokser!" },
+        { header: "Penis og testikler", text: "Det første tegnet på pubertet er ofte at testiklene vokser og pungen endrer farge til å bli mørkere. Senere vokser penis i både lengde og tykkelse.", proTip: "Husk: Det er enorme variasjoner på hva som er 'normal' størrelse, både i slapp og stiv tilstand. Ikke sammenlign deg med andre i dusjen – alle utvikler seg i ulikt tempo." },
+        { header: "Spontane ereksjoner", text: "Plutselig blir penis stiv uten at du har tenkt på noe spesielt seksuelt. Det kan skje på bussen, i klasserommet eller ved middagsbordet. Det er kroppens måte å teste at systemet fungerer.", proTip: "Skjer det i klasserommet? Pust rolig, tenk på noe utrolig kjedelig (som gangetabellen), og bruk sekken eller en jakke som 'skjold' i fanget til det går over." }
+      ]
+    },
+    hud: {
+      title: "Hud, Hår & Svette",
+      intro: "Kjertlene dine går amok i puberteten. Her er din overlevelsesguide.",
+      content: [
+        { header: "Kviser: Sannheten", text: "Hormonene får huden til å lage ekstra mye fett (talg). Når porer tettes av dette fettet og døde hudceller, oppstår kviser. Det skyldes **ikke** at du vasker deg for lite.", svg: SVGS.hud_pore, proTip: "Vask ansiktet mildt morgen og kveld. Og det viktigste: IKKE klem! Det presser bakteriene dypere ned og gir stygge arr." },
+        { header: "Svette og lukt", text: "Du har fått nye svettekjertler (apokrine kjertler) som reagerer på følelser og stress. Svetten i seg selv lukter ingenting før den treffer bakterier på huden – det er da 'svettelukten' kommer.", instructions: "Daglig vask av armhulene med mild såpe og en god deodorant gjør jobben. Husk rene klær!", proTip: "Visste du at antiperspirant (som stopper svette) fungerer best hvis du tar den på om kvelden før du legger deg?" },
+        { header: "Barberingstips", text: "Mange velger å fjerne hår under armene eller i ansiktet. Bruk alltid rent utstyr og barberskum/såpe.", svg: SVGS.hår_folikkel, proTip: "Barber alltid MED hårene (nedover) for å unngå 'shaving burn', røde prikker og inngrodde hår. Bruk fuktighetskrem etterpå." }
+      ]
+    },
+    hjernen: {
+      title: "Hjernen & Følelser",
+      intro: "Hjernen din er under total renovering nå. Det forklarer hvorfor alt føles så intenst.",
+      content: [
+        { header: "Gasspedalen vs. Bremsen", text: "Hjernen bygges om 'bakfra og frem'. Området for følelser (amygdala) er ferdig utviklet lenge før bremsen (prefrontal cortex), som styrer fornuft og konsekvenser. Derfor føles alt som krise eller fantastisk akkurat nå.", svg: SVGS.hjerne, proTip: "Når du er dritforbanna: Vent 10 minutter før du sender den meldingen du har lyst til å sende. Da rekker 'fornuften' å koble seg på." },
+        { header: "Sosial følsomhet", text: "Hjernen din blir plutselig ekstremt opptatt av hva andre mener om deg. Den prøver å finne sin plass i flokken. Det kan føles som om alle ser på deg.", proTip: "Husk: De aller fleste andre er så opptatt av seg selv og sin egen usikkerhet at de nesten ikke legger merke til hva du gjør eller har på deg." },
+        { header: "Søvn og Melatonin", text: "Søvnhormonet ditt produseres senere på kvelden nå enn før. Derfor er du våken sent, selv om du må opp tidlig. Men hjernen *trenger* 9 timer for å klare ombyggingen.", svg: SVGS.sove, proTip: "Legg bort mobilen 30 minutter før du skal sove – det blå lyset lurer hjernen til å tro at det er dag, og gjør det umulig å sovne." }
+      ]
+    }
+  };
+
+  const navigate = (id) => {
+    setCurrentPage(id);
+    if (scrollRef.current) scrollRef.current.scrollTo(0,0);
+  };
+
+  return (
+    <div className="flex flex-col h-full bg-slate-50 animate-in">
+      <div className="bg-white border-b p-4 flex items-center gap-3 shrink-0">
+        <button onClick={currentPage === 'home' ? onBack : () => navigate('home')} className="text-rose-500 font-bold p-1"><ChevronLeft size={24}/></button>
+        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-500 to-indigo-600 flex items-center justify-center text-sm text-white font-bold">🧬</div>
+        <h2 className="font-bold text-sm tracking-tight uppercase">LifeGuide</h2>
+      </div>
+      <div ref={scrollRef} className="flex-grow overflow-y-auto p-5 pb-10 space-y-4">
+        {currentPage === 'home' ? (
+          <div>
+            <h1 className="text-xl font-black text-slate-800 mb-2 leading-tight">{pages.home.title}</h1>
+            <p className="text-xs text-slate-500 mb-6 leading-relaxed">{pages.home.intro}</p>
+            <div className="grid grid-cols-1 gap-3">
+              {pages.home.menu.map(item => (
+                <button key={item.id} onClick={() => navigate(item.id)} className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4 text-left active:scale-[0.98] transition-all">
+                  <div className={`w-12 h-12 rounded-xl ${item.color} flex items-center justify-center text-xl font-bold shadow-sm`}>{item.icon}</div>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-slate-700 text-sm">{item.label}</span>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">Les mer ❯</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="animate-in pb-12">
+            <h1 className="text-2xl font-black text-slate-800 mb-2">{pages[currentPage].title}</h1>
+            <p className="text-sm text-slate-500 mb-8 font-medium">{pages[currentPage].intro}</p>
+            {pages[currentPage].content.map((s, i) => (
+              <div key={i} className="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm mb-6 animate-in">
+                {s.isProduct && <span className="inline-block px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-[10px] font-bold uppercase mb-3 tracking-widest">Hygieneprodukt</span>}
+                <h3 className="font-bold text-lg text-slate-800 mb-3">{s.header}</h3>
+                <p className="text-sm text-slate-600 leading-relaxed mb-6">{s.text}</p>
+                {s.svg && <div className="w-full aspect-[4/3] bg-slate-50 rounded-2xl flex items-center justify-center p-6 mb-6 border border-slate-100">{s.svg}</div>}
+                {s.instructions && <div className="bg-sky-50 p-4 rounded-2xl border-l-4 border-sky-500 mb-4 text-xs text-sky-900 leading-relaxed"><strong>Slik gjør du:</strong> {s.instructions}</div>}
+                {s.proTip && <div className="bg-pink-50 p-4 rounded-2xl border-l-4 border-pink-500 text-xs text-pink-900 font-medium leading-relaxed"><strong>Eksperttips:</strong> {s.proTip}</div>}
+              </div>
+            ))}
+            <button onClick={() => navigate('home')} className="w-full p-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg mt-4 uppercase text-xs tracking-widest active:scale-95 transition-all">Tilbake til meny</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// --- QUIZ APP (DAG 4) ---
 const QuizApp = ({ onBack, onComplete, setStats }) => {
   const [qIndex, setQIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -44,21 +162,95 @@ const QuizApp = ({ onBack, onComplete, setStats }) => {
   const [feedback, setFeedback] = useState(null);
 
   const questions = [
-    { q: "Er det lov å dele bilder eller videoer av andre i dusjen?", options: ["Ja, hvis det er morsomt", "Nei, det er ulovlig", "Bare hvis man spør først"], a: 1, info: "Det er ulovlig å dele krenkende bilder eller videoer av andre uten samtykke. Det kan straffes av politiet." },
-    { q: "Hva styrer følelsene i puberteten?", options: ["Amygdala (Følelsessenteret)", "Prefrontal cortex (Fornuften)", "Magesekken"], a: 0, info: "Amygdala er ferdig utviklet før fornuftssenteret, derfor kan følelsene være sterkere enn fornuften." },
-    { q: "Hvor ofte bør man bytte tampong for å unngå infeksjon?", options: ["En gang i døgnet", "Minst hver 8. time", "Når den faller ut"], a: 1, info: "For å unngå sykdommen TSS må tampongen byttes minst hver 8. time." },
-    { q: "Hva skjer i strupehodet når gutter kommer i stemmeskiftet?", options: ["Stemmebåndene blir kortere", "Stemmebåndene blir lengre og tykkere", "Tunga blir større"], a: 1, info: "Når stemmebåndene vokser blir stemmen dypere. 'Pipingen' skjer fordi musklene ikke er vant til den nye lengden ennå." },
-    { q: "Hvorfor kan følelsene svinge voldsomt i puberteten?", options: ["Fordi 'følelsessenteret' er ferdig før 'fornuften'", "Fordi man sover for mye", "Det er bare innbilning"], a: 0, info: "Hjernen bygges om 'bakfra'. Bremsen (fornuften) er ikke ferdigkoblet før man er over 20 år!" },
-    { q: "Hva er en 'våt drøm'?", options: ["At man har tisset på seg", "At kroppen tømmer ut sæd mens man sover", "At man har badet i drømme"], a: 1, info: "Dette er helt naturlig og skjer fordi kroppen produserer sæd som må ut." },
-    { q: "Hva bør du gjøre hvis du ser mobbing i en gruppechat?", options: ["Ikke gjøre noe", "Le med", "Si ifra eller støtte den som blir utsatt"], a: 2, info: "Å være en alliert betyr å tørre å si ifra. Det betyr enormt mye for den som står alene." },
-    { q: "Hvis noen sender deg et nakenbilde du ikke har bedt om, hva bør du gjøre?", options: ["Vise det til alle vennene dine", "Ikke svare, ta skjermbilde og si fra til en voksen", "Sende et bilde tilbake"], a: 1, info: "Aldri del bildet videre. Det er viktig å si fra til en voksen du stoler på." },
-    { q: "Jonas filmet Isak uten lov. Hvem har ansvaret?", options: ["Isak, som sang høyt", "Alex, som så på videoen", "Jonas, som filmet og delte"], a: 2, info: "Den som filmer og deler har hovedansvaret." },
-    { q: "Hva betyr 'samtykke'?", options: ["At man ikke sier nei", "Et tydelig og frivillig JA", "At man er kjærester"], a: 1, info: "Samtykke er et aktivt, frivillig JA. Fravær av et nei er ikke et ja." },
-    { q: "Er det normalt at brystene vokser i ulikt tempo hos jenter?", options: ["Ja, det er veldig vanlig", "Nei, da må man til legen", "Bare hvis man er venstrehendt"], a: 0, info: "Kroppen er sjelden helt symmetrisk, spesielt i puberteten. Det pleier å jevne seg ut." },
-    { q: "Hva betyr det å være 'skeiv'?", options: ["At man går rart", "Et fellesord for de som bryter med normer for kjønn og seksualitet", "At man er usikker"], a: 1, info: "Skeiv er et positivt paraplybegrep for mange ulike identiteter som homofil, lesbisk, bi, trans osv." },
-    { q: "Hva er en spontan ereksjon?", options: ["At penis blir stiv fordi man er kåt", "At penis blir stiv helt uten grunn", "Et tegn på sykdom"], a: 1, info: "Spontane ereksjoner skjer ofte i puberteten uten at det har noe med seksuelle tanker å gjøre." },
-    { q: "Hvem kan du snakke med hvis du har spørsmål om kropp og følelser?", options: ["Ingen, det er for flaut", "Bare venner på din egen alder", "Helsesykepleier, foreldre eller chattetjenester"], a: 2, info: "Det finnes mange trygge voksne som har taushetsplikt og er vant til å snakke om dette." },
-    { q: "Hva er den viktigste grunnen til kviser?", options: ["Sjokolade", "Dårlig hygiene", "Hormoner"], a: 2, info: "Hormoner øker talgproduksjonen som tetter porene. Det er ikke din feil!" }
+    {
+      q: "Er det lov å dele bilder eller videoer av andre i dusjen?",
+      options: ["Ja, hvis det er morsomt", "Nei, det er ulovlig", "Bare hvis man spør først"],
+      a: 1,
+      info: "Det er ulovlig å dele krenkende bilder eller videoer av andre uten samtykke. Det kan straffes av politiet."
+    },
+    {
+      q: "Hva styrer følelsene i puberteten?",
+      options: ["Amygdala (Følelsessenteret)", "Prefrontal cortex (Fornuften)", "Magesekken"],
+      a: 0,
+      info: "Amygdala er ferdig utviklet før fornuftssenteret, derfor kan følelsene være sterkere enn fornuften."
+    },
+    {
+      q: "Hvor ofte bør man bytte tampong for å unngå infeksjon?",
+      options: ["En gang i døgnet", "Minst hver 8. time", "Når den faller ut"],
+      a: 1,
+      info: "For å unngå sykdommen TSS må tampongen byttes minst hver 8. time."
+    },
+    {
+      q: "Hva skjer når stemmen til gutter 'sprekker'?",
+      options: ["Den blir ødelagt", "Strupehodet vokser og stemmebåndene blir lengre", "Man har skreket for høyt"],
+      a: 1,
+      info: "Det er helt normalt mens musklene lærer seg å styre de nye, lengre stemmebåndene."
+    },
+    {
+      q: "Hva bør du gjøre hvis en venn blir mobbet i chatten?",
+      options: ["Ikke gjøre noe", "Le med", "Si ifra eller støtte den som blir utsatt"],
+      a: 2,
+      info: "Å være en alliert betyr å tørre å si ifra. Det betyr enormt mye for den som står alene."
+    },
+    {
+      q: "Hvis noen sender deg et nakenbilde du ikke har bedt om, hva bør du gjøre?",
+      options: ["Vise det til alle vennene dine", "Ikke svare, ta skjermbilde og si fra til en voksen", "Sende et bilde tilbake"],
+      a: 1,
+      info: "Aldri del bildet videre. Det er viktig å si fra til en voksen du stoler på."
+    },
+    {
+      q: "Jonas filmet Isak uten lov. Hvem har ansvaret?",
+      options: ["Isak, som sang høyt", "Alex, som så på videoen", "Jonas, som filmet og delte"],
+      a: 2,
+      info: "Den som filmer og deler har hovedansvaret."
+    },
+    {
+      q: "Hva betyr 'samtykke'?",
+      options: ["At man ikke sier nei", "Et tydelig og frivillig JA", "At man er kjærester"],
+      a: 1,
+      info: "Samtykke er et aktivt, frivillig JA. Fravær av et nei er ikke et ja."
+    },
+    {
+      q: "Er det normalt at brystene vokser i ulikt tempo hos jenter?",
+      options: ["Ja, det er veldig vanlig", "Nei, da må man til legen", "Bare hvis man er venstrehendt"],
+      a: 0,
+      info: "Kroppen er sjelden helt symmetrisk, spesielt i puberteten. Det pleier å jevne seg ut."
+    },
+    {
+      q: "Hva betyr det å være 'skeiv'?",
+      options: ["At man går rart", "Et fellesord for de som bryter med normer for kjønn og seksualitet", "At man er usikker"],
+      a: 1,
+      info: "Skeiv er et positivt paraplybegrep for mange ulike identiteter som homofil, lesbisk, bi, trans osv." },
+    {
+      q: "Hva er en spontan ereksjon?",
+      options: ["At penis blir stiv fordi man er kåt", "At penis blir stiv helt uten grunn", "Et tegn på sykdom"],
+      a: 1,
+      info: "Spontane ereksjoner skjer ofte i puberteten uten at det har noe med seksuelle tanker å gjøre."
+    },
+    {
+      q: "Hvem kan du snakke med hvis du har spørsmål om kropp og følelser?",
+      options: ["Ingen, det er for flaut", "Bare venner på din egen alder", "Helsesykepleier, foreldre eller chattetjenester"],
+      a: 2,
+      info: "Det finnes mange trygge voksne som har taushetsplikt og er vant til å snakke om dette."
+    },
+    {
+      q: "Hva er den viktigste grunnen til kviser?",
+      options: ["Sjokolade", "Dårlig hygiene", "Hormoner"],
+      a: 2,
+      info: "Hormoner øker talgproduksjonen som tetter porene. Det er ikke din feil!"
+    },
+    {
+      q: "Hva bør du gjøre hvis du har glemt bind på skolen?",
+      options: ["Gå hjem", "Spørre helsesykepleier eller en venninne", "Bruke toalettpapir hele dagen"],
+      a: 1,
+      info: "Helsesykepleier har alltid bind! Og venner hjelper gjerne."
+    },
+    {
+      q: "Hvorfor trenger tenåringer mer søvn?",
+      options: ["Fordi de er late", "For at hjernen skal utvikle seg ferdig", "De trenger ikke mer søvn"],
+      a: 1,
+      info: "Hjernen jobber på spreng med å bygge seg om, og det krever mye energi og hvile."
+    }
   ];
 
   const handleAnswer = (idx) => {
@@ -89,6 +281,12 @@ const QuizApp = ({ onBack, onComplete, setStats }) => {
         <Trophy size={64} className="text-yellow-400 mb-4 drop-shadow-lg" />
         <h2 className="text-3xl font-black mb-2">GRATULERER!</h2>
         <p className="text-lg mb-8 opacity-90">Du fikk {score} av {questions.length} riktige!</p>
+        <div className="bg-white/20 p-6 rounded-2xl mb-8 w-full backdrop-blur-sm">
+            <p className="font-bold mb-2">Ditt nivå:</p>
+            <p className="text-xl text-yellow-300 font-black tracking-widest uppercase">
+                {score >= 13 ? "HELSE-GURU 🏆" : score >= 10 ? "EKSPERT 🌟" : score >= 5 ? "GODT JOBBA! 👍" : "LÆRLING 🌱"}
+            </p>
+        </div>
         <button onClick={onBack} className="w-full p-4 bg-white text-indigo-600 rounded-2xl font-bold shadow-xl active:scale-95 transition-all">FERDIG</button>
       </div>
     );
@@ -105,7 +303,13 @@ const QuizApp = ({ onBack, onComplete, setStats }) => {
             <span>Spørsmål {qIndex + 1}/{questions.length}</span>
             <span>Poeng: {score}</span>
         </div>
+        
+        <div className="h-2 w-full bg-slate-200 rounded-full mb-8 overflow-hidden">
+            <div className="h-full bg-purple-500 transition-all duration-500 ease-out" style={{ width: `${((qIndex + 1) / questions.length) * 100}%` }}></div>
+        </div>
+
         <h3 className="text-lg font-bold text-slate-800 mb-6 leading-snug">{questions[qIndex].q}</h3>
+
         <div className="space-y-3">
           {questions[qIndex].options.map((opt, i) => (
             <button
@@ -125,6 +329,7 @@ const QuizApp = ({ onBack, onComplete, setStats }) => {
             </button>
           ))}
         </div>
+
         {feedback && (
             <div className="mt-6 animate-in">
                 <div className={`p-4 rounded-xl mb-4 text-sm ${selected === questions[qIndex].a ? 'bg-green-50 text-green-800' : 'bg-rose-50 text-rose-800'}`}>
@@ -138,85 +343,44 @@ const QuizApp = ({ onBack, onComplete, setStats }) => {
   );
 };
 
-// --- LifeGuide Komponent (FULL) ---
-const LifeGuideApp = ({ onBack }) => {
-  const [currentPage, setCurrentPage] = useState('home');
-  const scrollRef = useRef(null);
-  
-  // (Innholdet her er identisk med den "lange" versjonen fra forrige svar, bare forkortet i denne visningen for å spare plass. 
-  // I den faktiske koden er alle tekstene om mensen, gutter, hjerne etc med.)
-  const pages = {
-    home: {
-      title: "Din guide til ungdomstiden",
-      intro: "Puberteten er som en software-oppdatering for hele systemet ditt. Her får du de ærlige svarene på alt du lurer på.",
-      menu: [
-        { id: 'mensen', label: "Mensen & Utflod", icon: "🩸", color: "bg-rose-100 text-rose-600" },
-        { id: 'jenter', label: "Jenter & Kroppen", icon: "🌸", color: "bg-pink-100 text-pink-600" },
-        { id: 'gutter', label: "Gutter & Kroppen", icon: "🗣️", color: "bg-blue-100 text-blue-600" },
-        { id: 'hud', label: "Hud, Hår & Svette", icon: "🧼", color: "bg-emerald-100 text-emerald-600" },
-        { id: 'hjernen', label: "Hjernen & Følelser", icon: "🧠", color: "bg-purple-100 text-purple-600" }
-      ]
-    },
-    mensen: {
-      title: "Mensen & Utflod", intro: "Alt om syklus og produkter.",
-      content: [
-        { header: "Syklusen", text: "Hver måned gjør livmoren seg klar til å ta imot et egg.", svg: SVGS.syklus, proTip: "Bruk en mens-app! Da lærer du din egen rytme å kjenne." },
-        { header: "Utflod", text: "Hvitaktig væske i trusa er helt normalt og sunt.", proTip: "Bruk truseinnlegg hvis det føles fuktig." },
-        { isProduct: true, header: "Sanitetsbind", text: "Klistres fast i trusa. Enkelt og trygt.", svg: SVGS.bind, instructions: "Bytt hver 3.-4. time.", proTip: "Pakk inn i papir før du kaster det." },
-        { isProduct: true, header: "Tampong", text: "Settes inn i skjeden. Perfekt for bading.", svg: SVGS.tampong, instructions: "Vask hendene før bruk! Bytt minst hver 8. time.", proTip: "Start med minste størrelse." },
-        { isProduct: true, header: "Menskopp", text: "Miljøvennlig silikonkopp.", svg: SVGS.menskopp, instructions: "Tømmes og skylles hver 12. time.", proTip: "Krever litt øvelse." },
-        { isProduct: true, header: "Mens-truse", text: "Truse med absorberende lag.", svg: SVGS.truse, proTip: "Perfekt om natta." }
-      ]
-    },
-    jenter: { title: "Jenter & Kroppen", intro: "Endringer i form og følelse.", content: [{ header: "Brystutvikling", text: "Starter ofte med små knopper.", svg: SVGS.bryster, proTip: "Bruk en myk bomullstopp hvis det er ømt." }, { header: "Nye kurver", text: "Bekkenet utvider seg.", svg: SVGS.kurver }] },
-    gutter: { title: "Gutter & Kroppen", intro: "Testosteronet jobber på høygir.", content: [{ header: "Stemmeskifte", text: "Strupehodet vokser.", svg: SVGS.larynx, proTip: "Smil hvis stemmen piper – det skjer alle!" }, { header: "Spontane ereksjoner", text: "Helt normalt og skjer alle.", proTip: "Pust rolig og bruk sekken som skjold." }] },
-    hud: { title: "Hud & Hår", intro: "Kjertlene går amok.", content: [{ header: "Kviser", text: "Hormoner, ikke dårlig hygiene.", svg: SVGS.hud_pore, proTip: "Ikke klem! Det gir arr." }, { header: "Barbering", text: "Et valg, ikke et krav.", svg: SVGS.hår_folikkel, proTip: "Barber med hårene for å unngå nupper." }] },
-    hjernen: { title: "Hjernen", intro: "Under ombygging.", content: [{ header: "Følelser", text: "Amygdala styrer showet.", svg: SVGS.hjerne, proTip: "Tell til ti før du sender en sint melding." }, { header: "Søvn", text: "Du trenger 9 timer.", svg: SVGS.sove, proTip: "Legg bort mobilen før du legger deg." }] }
-  };
-
-  const navigate = (id) => { setCurrentPage(id); if (scrollRef.current) scrollRef.current.scrollTo(0,0); };
-
-  return (
-    <div className="flex flex-col h-full bg-slate-50 animate-in">
-      <div className="bg-white border-b p-4 flex items-center gap-3 shrink-0"><button onClick={currentPage === 'home' ? onBack : () => navigate('home')} className="text-rose-500 font-bold p-1"><ChevronLeft/></button><div className="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-500 to-indigo-600 flex items-center justify-center text-sm text-white font-bold">🧬</div><h2 className="font-bold text-sm tracking-tight">LifeGuide</h2></div>
-      <div ref={scrollRef} className="flex-grow overflow-y-auto p-5 pb-10 space-y-4">
-        {currentPage === 'home' ? (
-          <div className="grid grid-cols-1 gap-3">
-            <h1 className="text-xl font-black text-slate-800 mb-2">{pages.home.title}</h1>
-            <p className="text-xs text-slate-500 mb-6">{pages.home.intro}</p>
-            {pages.home.menu.map(item => ( <button key={item.id} onClick={() => navigate(item.id)} className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4 text-left"><div className={`w-12 h-12 rounded-xl ${item.color} flex items-center justify-center text-xl`}>{item.icon}</div><span className="font-bold text-slate-700 text-sm">{item.label}</span></button> ))}
-          </div>
-        ) : (
-          <div className="animate-in pb-12">
-            <h1 className="text-2xl font-black text-slate-800 mb-2">{pages[currentPage].title}</h1>
-            <p className="text-sm text-slate-500 mb-8">{pages[currentPage].intro}</p>
-            {pages[currentPage].content.map((s, i) => (
-              <div key={i} className="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm mb-6"><h3 className="font-bold text-lg text-slate-800 mb-3">{s.header}</h3><p className="text-sm text-slate-600 mb-6">{s.text}</p>{s.svg && <div className="w-full aspect-[4/3] bg-slate-50 rounded-2xl flex items-center justify-center p-6 mb-6">{s.svg}</div>}
-              {s.instructions && <div className="bg-sky-50 p-4 rounded-2xl border-l-4 border-sky-500 mb-4 text-xs text-sky-900"><strong>Slik gjør du:</strong> {s.instructions}</div>}
-              {s.proTip && <div className="bg-pink-50 p-4 rounded-2xl border-l-4 border-pink-500 text-xs text-pink-900"><strong>Eksperttips:</strong> {s.proTip}</div>}</div>
-            ))}
-            <button onClick={() => navigate('home')} className="w-full p-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg">Tilbake</button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
 // --- NOTATBLOKK APP (DAG 3) ---
 const NotepadApp = ({ onBack, onComplete }) => {
   const [text, setText] = useState("");
   const [copied, setCopied] = useState(false);
-  const handleCopy = () => { navigator.clipboard.writeText(text); setCopied(true); onComplete(); setTimeout(() => setCopied(false), 2000); };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    onComplete();
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="flex flex-col h-full bg-yellow-50 animate-in">
        <div className="bg-yellow-400 p-4 text-white font-bold flex items-center gap-3 shrink-0 shadow-md">
-        <button onClick={onBack}><ChevronLeft /></button><span>Refleksjonsnotat</span>
+        <button onClick={onBack}><ChevronLeft /></button>
+        <span>Refleksjonsnotat</span>
       </div>
       <div className="flex-grow p-6 overflow-y-auto">
-        <div className="bg-white p-4 rounded-xl shadow-sm mb-4 border border-yellow-100"><p className="text-sm text-slate-600"><span className="font-bold block mb-2 text-indigo-600">Oppgave til læreren:</span>Reflekter over det som skjedde i klassechatten. Hvordan påvirket dine valg situasjonen?</p></div>
-        <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Skriv her..." className="w-full h-64 p-4 rounded-xl border border-slate-200 shadow-inner text-sm outline-none resize-none bg-white text-slate-800"></textarea>
-        <button onClick={handleCopy} className="w-full mt-4 p-4 rounded-xl font-bold shadow-lg transition-all bg-indigo-600 text-white active:scale-95 flex items-center justify-center gap-2">{copied ? <><Check size={18}/> Kopiert!</> : <><Copy size={18}/> Kopier tekst og send til naturfagslærer på Teams</>}</button>
+        <div className="bg-white p-4 rounded-xl shadow-sm mb-4 border border-yellow-100">
+          <p className="text-sm text-slate-600">
+            <span className="font-bold block mb-2 text-indigo-600">Oppgave til læreren:</span>
+            Reflekter over det som skjedde i klassechatten. Hvordan påvirket dine valg situasjonen? Hva ville du gjort annerledes i virkeligheten?
+          </p>
+        </div>
+        <textarea 
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Skriv teksten din her..."
+          className="w-full h-64 p-4 rounded-xl border border-slate-200 shadow-inner text-sm focus:ring-2 focus:ring-yellow-400 outline-none resize-none bg-white text-slate-800"
+        ></textarea>
+        <button 
+          onClick={handleCopy}
+          className="w-full mt-4 p-4 rounded-xl font-bold shadow-lg transition-all bg-indigo-600 text-white active:scale-95 flex items-center justify-center gap-2"
+        >
+          {copied ? <><Check size={18}/> Kopiert!</> : <><Copy size={18}/> Kopier tekst og send til lærer</>}
+        </button>
+        <p className="text-[10px] text-center text-slate-500 mt-2">Kopier teksten herfra og lim den inn i Teams/OneNote.</p>
       </div>
     </div>
   );
@@ -254,6 +418,7 @@ const MockChat = ({ playerName, onBack, setStats, setFlags, setNotifications, cu
 
   useEffect(() => {
     let script = currentDay === 1 ? day1Start : (currentDay === 2 ? day2Start : day3Start);
+    
     const isScriptStarted = chatHistory.some(m => m.text === script[0].text);
     if (!isScriptStarted && chatPhase === 0) {
        setIsTyping(true);
@@ -285,7 +450,13 @@ const MockChat = ({ playerName, onBack, setStats, setFlags, setNotifications, cu
     setStats(prev => ({ empathy: Math.min(100, Math.max(0, prev.empathy + impact.empathy)), socialStatus: Math.min(100, Math.max(0, prev.socialStatus + impact.socialStatus)) }));
     if (flag) setFlags(f => ({ ...f, [flag]: true }));
     if ((flag === 'laughed' || flag === 'defendedIsak') && currentDay === 1) setTimeout(() => setNotifications(n => ({ ...n, dm: true })), 5000);
-    if (currentDay === 2 && flag === 'apologized') setTimeout(() => setNotifications(n => ({ ...n, dm: true })), 3000);
+    
+    // VIKTIG: Trigger Liam på dag 2 hvis man forsvarte ham
+    if (currentDay === 2) {
+         setTimeout(() => {
+            setNotifications(n => ({ ...n, dm: true }));
+         }, 3000);
+    }
 
     if (followUp) {
       setTimeout(() => {
